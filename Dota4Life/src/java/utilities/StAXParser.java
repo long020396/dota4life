@@ -36,6 +36,10 @@ public class StAXParser {
             
             boolean skillEntry = false;
             
+            while (reader.hasNext()) {
+                
+            }
+            
         } catch (XMLStreamException ex) {
             Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
