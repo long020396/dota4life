@@ -36,7 +36,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Skill.findByCoolDown", query = "SELECT s FROM Skill s WHERE s.coolDown = :coolDown"),
     @NamedQuery(name = "Skill.findByMana", query = "SELECT s FROM Skill s WHERE s.mana = :mana"),
     @NamedQuery(name = "Skill.findByDamage", query = "SELECT s FROM Skill s WHERE s.damage = :damage"),
-    @NamedQuery(name = "Skill.findByDuration", query = "SELECT s FROM Skill s WHERE s.duration = :duration")})
+    @NamedQuery(name = "Skill.findByDuration", query = "SELECT s FROM Skill s WHERE s.duration = :duration"),
+    @NamedQuery(name = "Skill.findByScepterNote", query = "SELECT s FROM Skill s WHERE s.scepterNote = :scepterNote"),
+    @NamedQuery(name = "Skill.findByLinkenNote", query = "SELECT s FROM Skill s WHERE s.linkenNote = :linkenNote"),
+    @NamedQuery(name = "Skill.findByBkbNote", query = "SELECT s FROM Skill s WHERE s.bkbNote = :bkbNote"),
+    @NamedQuery(name = "Skill.findByMantaNote", query = "SELECT s FROM Skill s WHERE s.mantaNote = :mantaNote"),
+    @NamedQuery(name = "Skill.findBySilverNote", query = "SELECT s FROM Skill s WHERE s.silverNote = :silverNote")})
 public class Skill implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -66,6 +71,16 @@ public class Skill implements Serializable {
     private String damage;
     @Column(name = "Duration")
     private String duration;
+    @Column(name = "ScepterNote")
+    private String scepterNote;
+    @Column(name = "LinkenNote")
+    private String linkenNote;
+    @Column(name = "BkbNote")
+    private String bkbNote;
+    @Column(name = "MantaNote")
+    private String mantaNote;
+    @Column(name = "SilverNote")
+    private String silverNote;
     @JoinColumn(name = "HeroID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Hero heroID;
@@ -170,6 +185,46 @@ public class Skill implements Serializable {
 
     public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    public String getScepterNote() {
+        return scepterNote;
+    }
+
+    public void setScepterNote(String scepterNote) {
+        this.scepterNote = scepterNote;
+    }
+
+    public String getLinkenNote() {
+        return linkenNote;
+    }
+
+    public void setLinkenNote(String linkenNote) {
+        this.linkenNote = linkenNote;
+    }
+
+    public String getBkbNote() {
+        return bkbNote;
+    }
+
+    public void setBkbNote(String bkbNote) {
+        this.bkbNote = bkbNote;
+    }
+
+    public String getMantaNote() {
+        return mantaNote;
+    }
+
+    public void setMantaNote(String mantaNote) {
+        this.mantaNote = mantaNote;
+    }
+
+    public String getSilverNote() {
+        return silverNote;
+    }
+
+    public void setSilverNote(String silverNote) {
+        this.silverNote = silverNote;
     }
 
     public Hero getHeroID() {
