@@ -1,7 +1,11 @@
 package utilities;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Utils {
-    // Function to get an attribute of a HTML tag
+
+    /* Function to get an attribute of a HTML tag */
     public static String getHtmlAttributeValue(String input, String attrName) {
         int openDitto = 0;
         int closeDitto = 0;
@@ -20,8 +24,8 @@ public class Utils {
         }
         return input.substring(openDitto + 1, closeDitto);
     }
-    
-    // Function to get text value of a HTML tag
+
+    /* Function to get text value of a HTML tag */
     public static String getHtmlTextValue(String input, String tagName) {
         int begin = 0;
         int tmp = input.indexOf("<" + tagName);
@@ -34,16 +38,16 @@ public class Utils {
         int end = input.indexOf("</" + tagName);
         return input.substring(begin, end).trim();
     }
-    
-    // Function to get the first specific HTML open tag
+
+    /* Function to get the first specific HTML open tag */
     public static String getHtmlOpenTag(String input, String tagName) {
         String openTag = "<" + tagName + " ";
         int beginIndex = input.indexOf(openTag);
         int endIndex = input.indexOf(">", beginIndex) + 1;
         return input.substring(beginIndex, endIndex);
     }
-    
-    // Function to transform HTML special characters to symbol
+
+    /* Function to transform HTML special characters to symbol */
     public static String normalizeHTMLString(String input) {
         if (input.contains("&#40;")) {
             input = input.replaceAll("&#40;", "(");
@@ -56,8 +60,15 @@ public class Utils {
         }
         return input;
     }
-    
+
     public static String removeSpace(String input) {
         return input.replaceAll("> <", "><").replaceAll("\t", "").replaceAll("\n", "");
+    }
+
+    /* Function to set all String in HashMap to null for better performance in set String */
+    public static <T> void setAllToNull(HashMap<String, T> hashMap) {
+        for (Map.Entry<String, T> entrySet : hashMap.entrySet()) {
+            entrySet.setValue(null);
+        }
     }
 }
