@@ -2,7 +2,6 @@ package utilities;
 
 import entities.Attribute;
 import entities.Hero;
-import entities.RoleOfHero;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -175,7 +174,7 @@ public class Crawler {
                     doc += line;
                 }
 
-                if (line.contains("<span class=\"mw-headline\" id=\"Bio\">Bio</span>")) {
+                if (line.contains("<table class=\"infobox\" style=\"text-align:center; font-size:88%; line-height:1.5em; white-space:nowrap;\">")) {
                     correctContent = true;
                     doc += line;
                 }
