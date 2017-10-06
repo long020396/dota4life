@@ -13,12 +13,14 @@ import java.util.logging.Logger;
 public class Crawler {
 
     private List<Hero> heroList;
-    private Map<String, String> linksOfHeroes;
+    private Map<String, String> linksOfHeroes_DotaWiki;
+    private Map<String, String> linksOfHeroes_DotaOfficial;
     private Map<String, String> linksOfCounterHeroes;
 
     public Crawler() {
         this.heroList = new ArrayList<Hero>();
-        this.linksOfHeroes = new HashMap<String, String>();
+        this.linksOfHeroes_DotaWiki = new HashMap<String, String>();
+        this.linksOfHeroes_DotaOfficial = new HashMap<String, String>();
         this.linksOfCounterHeroes = new HashMap<String, String>();
     }
 
@@ -65,7 +67,7 @@ public class Crawler {
                             this.heroList.add(hero);
 
                             /* Add link to HashMap */
-                            this.linksOfHeroes.put(heroName, heroLink);
+                            this.linksOfHeroes_DotaWiki.put(heroName, heroLink);
                             this.linksOfCounterHeroes.put(heroName, heroLink + "/Counters");
 
                         }
@@ -96,7 +98,7 @@ public class Crawler {
 
     public void crawlHero() {
         int count = 0;
-        for (Map.Entry<String, String> entry : this.linksOfHeroes.entrySet()) {
+        for (Map.Entry<String, String> entry : this.linksOfHeroes_DotaWiki.entrySet()) {
             String document = getSkillDataFromHtml(entry.getValue());
             Hero hero = null;
             int index = -1;
