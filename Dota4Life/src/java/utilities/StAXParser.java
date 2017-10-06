@@ -3,11 +3,12 @@ package utilities;
 import entities.Hero;
 import entities.Role;
 import entities.RoleOfHero;
+import entities.Skill;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,19 +28,70 @@ public class StAXParser {
         XMLInputFactory fact = XMLInputFactory.newInstance();
         fact.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, false);
         fact.setProperty(XMLInputFactory.IS_VALIDATING, false);
-        
+
         XMLEventReader reader = null;
-        
+
         try {
             InputStream is = new ByteArrayInputStream(document.getBytes("UTF-8"));
             reader = fact.createXMLEventReader(new InputStreamReader(is, "UTF-8"));
-            
+
+            /* Flag variables for parser */
             boolean skillEntry = false;
-            
+
+            /* HashMap for String for better performance to set null */
+            HashMap<String, String> skillData = new HashMap<String, String>();
+            skillData.put("skillName", null);
+            skillData.put("skillImg", null);
+            skillData.put("ability", null);
+            skillData.put("affect", null);
+            skillData.put("damageType", null);
+            skillData.put("description", null);
+            skillData.put("damage", null);
+            skillData.put("duration", null);
+            skillData.put("coolDown", null);
+            skillData.put("manaCost", null);
+            skillData.put("scepterNote", null);
+            skillData.put("linkenNote", null);
+            skillData.put("bkbNote", null);
+            skillData.put("mantaNote", null);
+            skillData.put("silverNote", null);
+
+            /* Entity */
+            Skill skill = null;
+
             while (reader.hasNext()) {
-                
-            }
-            
+                XMLEvent event = reader.nextEvent();
+
+                /* Check start element */
+                if (event.isStartElement()) {
+                    StartElement startElement = event.asStartElement();
+
+                    /* If element is <div> */
+                    if (startElement.getName().toString().equals("div")) {
+                        if (!skillEntry) {
+                            Attribute attr = startElement.getAttributeByName(new QName("style"));
+                            if (attr != null) {
+                                if (attr.getValue().equals("flex: 0 1 450px; margin-right: 15px; vertical-align: top; background-color: #EAEAEA;")) {
+                                    skillEntry = true;
+                                }
+                            }
+                        }
+                    } // end of start tag <div>
+
+                } // end if startElement
+
+                /* Check characters */
+                if (event.isCharacters()) {
+
+                } // end if characters
+
+                /* Check end element */
+                if (event.isEndElement()) {
+                    EndElement endElement = event.asEndElement();
+
+                } // end if endElement
+
+            } // end while 
         } catch (XMLStreamException ex) {
             Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
@@ -49,7 +101,22 @@ public class StAXParser {
 
     /* Function to parse XML document to data of Counter Hero */
     public static void parseXMLCounterHeroData(String document, Hero hero) {
+        XMLInputFactory fact = XMLInputFactory.newInstance();
+        fact.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, false);
+        fact.setProperty(XMLInputFactory.IS_VALIDATING, false);
 
+        XMLEventReader reader = null;
+
+        try {
+            InputStream is = new ByteArrayInputStream(document.getBytes("UTF-8"));
+            reader = fact.createXMLEventReader(new InputStreamReader(is, "UTF-8"));
+        } catch (XMLStreamException ex) {
+            Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+
+        }
     }
 
     /* Function to parse XML document to data of Roles of many Heroes */
@@ -64,9 +131,14 @@ public class StAXParser {
             InputStream is = new ByteArrayInputStream(document.getBytes("UTF-8"));
             reader = fact.createXMLEventReader(new InputStreamReader(is, "UTF-8"));
 
+            /* Flag variables for parser */
             boolean heroEntry = false;
+
+            /* Data by text */
             String roleName = null;
             String heroName = null;
+
+            /* Entity */
             Role role = null;
             Hero hero = null;
 
@@ -76,21 +148,21 @@ public class StAXParser {
                 /* Check start element */
                 if (event.isStartElement()) {
                     StartElement startElement = event.asStartElement();
-                    
+
                     if (startElement.getName().toString().equals("span")) {
                         Attribute attr = startElement.getAttributeByName(new QName("class"));
                         if (attr != null) {
                             if (attr.getValue().equals("mw-headline")) {
-                                
+
                                 /* Get id value of span tag */
                                 roleName = startElement.getAttributeByName(new QName("id")).getValue().toString();
                                 role = new Role();
                                 role.setRoleName(roleName);
-                                
+
                             } // end if attr.getValue()
                         } // end if attr != null
-                    } // end if attr.getName() == span
-                    
+                    } // end of start tag <span>
+
                     if (startElement.getName().toString().equals("div")) {
                         Attribute attr = startElement.getAttributeByName(new QName("class"));
                         if (attr != null) {
@@ -98,9 +170,9 @@ public class StAXParser {
                                 heroEntry = true;
                             } // end if attr.getValue()
                         } // end if attr != null
-                    } // end if attr.getName() == div
+                    } // end of start tag <div>
                 } // end if startElement
-                
+
                 /* Check characters */
                 if (event.isCharacters()) {
                     if (heroEntry) {
@@ -110,25 +182,26 @@ public class StAXParser {
                                 hero = each;
                             }
                         } // end for heroList
-                        
+
                         RoleOfHero roh = new RoleOfHero();
                         roh.setRoleID(role);
                         roh.setHeroID(hero);
-                        
+
                         List<RoleOfHero> rohList = hero.getRoleOfHeroList();
                         rohList.add(roh);
                         hero.setRoleOfHeroList(rohList);
-                        
+
                         heroEntry = false;
                     } // end if heroEntry
                 } // end if characters
-                
+
                 /* Check end element */
                 if (event.isEndElement()) {
                     EndElement endElement = event.asEndElement();
                     /* Not neccessary */
                 }
-            }
+
+            } // end while
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
