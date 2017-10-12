@@ -100,7 +100,7 @@ public class StAXParser {
     }
 
     /* Function to parse XML document to data of Counter Hero */
-    public static void parseXMLCounterHeroData(String document, Hero hero) {
+    public static void parseXMLCounterHeroData(String document, List<Hero> heroList, Hero hero) {
         XMLInputFactory fact = XMLInputFactory.newInstance();
         fact.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, false);
         fact.setProperty(XMLInputFactory.IS_VALIDATING, false);
@@ -110,8 +110,88 @@ public class StAXParser {
         try {
             InputStream is = new ByteArrayInputStream(document.getBytes("UTF-8"));
             reader = fact.createXMLEventReader(new InputStreamReader(is, "UTF-8"));
+
+            /* Flag variables for parser */
+            boolean heroEntry = false;
+
+            /*
+                listType is number stands for list Counter Heroes
+                    1 for [Weak with Heroes] list
+                    2 for [Strong with Heroes] list
+                    3 for [Combo with Heroes] list
+             */
+            int listType = 0;
+
+            /* Data by text */
+            String heroName = null;
+
+            /* Entity */
+            Hero tmpHero = null;
+
+            while (reader.hasNext()) {
+                XMLEvent event = reader.nextEvent();
+
+                /* Check start element */
+                if (event.isStartElement()) {
+                    StartElement startElement = event.asStartElement();
+
+                    if (startElement.getName().toString().equals("div")) {
+                        Attribute attr = startElement.getAttributeByName(new QName("style"));
+                        if (attr != null) {
+                            if (attr.getValue().contains("margin-bottom:5px; box-shadow:0px 0px 2px 4px")) {
+                                heroEntry = true;
+                            }
+                        }
+                    } // end of start tag <div>
+
+                    if (startElement.getName().toString().equals("a")) {
+                        if (heroEntry) {
+                            Attribute attr = startElement.getAttributeByName(new QName("title"));
+                            if (attr != null) {
+                                heroName = attr.getValue();
+
+                                for (Hero each : heroList) {
+                                    if (each.getHeroName().equals(heroName)) {
+
+                                        /* Add hero to the right list */
+                                        switch (listType) {
+                                            case 1: // [Weak with Heroes] list
+                                                hero.getWeakWithHeroes().add(each);
+                                                break;
+
+                                            case 2: // [Strong with Heroes] list
+                                                hero.getStrongWithHeroes().add(each);
+                                                break;
+
+                                            default: // [Combo with Heroes] list
+                                                hero.getComboWithHeroes().add(each);
+                                        }
+                                        break;
+                                    }
+                                } // end hero search
+                            } // end if attr != null
+                            heroEntry = false;
+                        }
+                    } // end of start tag <a>
+                }
+
+                /* Check characters */
+                if (event.isCharacters()) {
+                    String str = event.asCharacters().getData();
+                    if (str.contains("Bad against") || str.contains("Good against") || str.contains("Works well")) {
+                        listType++;
+                    }
+                }
+
+                /* Check start element */
+                if (event.isEndElement()) {
+                    EndElement endElement = event.asEndElement();
+                }
+            }
+
         } catch (XMLStreamException ex) {
-            Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
+System.out.println("Error on parsing hero: " + hero.getHeroName());
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -194,13 +274,6 @@ public class StAXParser {
                         heroEntry = false;
                     } // end if heroEntry
                 } // end if characters
-
-                /* Check end element */
-                if (event.isEndElement()) {
-                    EndElement endElement = event.asEndElement();
-                    /* Not neccessary */
-                }
-
             } // end while
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);

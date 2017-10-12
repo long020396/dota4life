@@ -78,11 +78,16 @@ public class Hero implements Serializable {
 
     public Hero() {
         this.roleOfHeroList = new ArrayList<RoleOfHero>();
+        this.weakWithHeroes = new ArrayList<Hero>();
+        this.strongWithHeroes = new ArrayList<Hero>();
+        this.comboWithHeroes = new ArrayList<Hero>();
     }
 
     public Hero(Integer id) {
         this.id = id;
-        this.roleOfHeroList = new ArrayList<RoleOfHero>();
+        this.weakWithHeroes = new ArrayList<Hero>();
+        this.strongWithHeroes = new ArrayList<Hero>();
+        this.comboWithHeroes = new ArrayList<Hero>();
     }
 
     public Hero(Integer id, String heroName, String heroImg, String lore) {
@@ -91,6 +96,9 @@ public class Hero implements Serializable {
         this.heroImg = heroImg;
         this.lore = lore;
         this.roleOfHeroList = new ArrayList<RoleOfHero>();
+        this.weakWithHeroes = new ArrayList<Hero>();
+        this.strongWithHeroes = new ArrayList<Hero>();
+        this.comboWithHeroes = new ArrayList<Hero>();
     }
 
     public Integer getId() {

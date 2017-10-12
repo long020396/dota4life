@@ -65,6 +65,22 @@ public class Utils {
         return input.replaceAll("> <", "><").replaceAll("\t", "").replaceAll("\n", "");
     }
 
+    /* Function to close unclosed <img> tag */
+    public static String autoCloseImgTag(String input) {
+        int beginIndex = input.indexOf("<img", 0);
+        while (beginIndex >= 0) {
+            int endIndex = input.indexOf(">", beginIndex) + 1;
+            String slash = input.substring(endIndex - 2, endIndex - 1);
+            
+            if (!slash.equals("/")) {
+                input = input.substring(0, endIndex - 1) + "/" + input.substring(endIndex - 1);
+            }
+            beginIndex = input.indexOf("<img", endIndex);
+        }
+
+        return input;
+    }
+
     /* Function to set all String in HashMap to null for better performance in set String */
     public static <T> void setAllToNull(HashMap<String, T> hashMap) {
         for (Map.Entry<String, T> entrySet : hashMap.entrySet()) {

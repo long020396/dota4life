@@ -26,8 +26,58 @@ public class Crawler {
 
     public void crawlData() {
         getListOfHero();
-        crawlRole();
-        crawlHero();
+//        crawlRole();
+//        crawlHero();
+        crawlCounterHeroes();
+//        Map.Entry<String, String> entry = this.linksOfCounterHeroes.entrySet().iterator().next();
+//        String document = getCounterHeroesFromHtml(entry.getValue());
+//        Hero hero = null;
+//        for (Hero each : this.heroList) {
+//            if (each.getHeroName().equals(entry.getKey())) {
+//                hero = each;
+//                break;
+//            }
+//        }
+//        StAXParser.parseXMLCounterHeroData(document, this.heroList, hero);
+
+//        int count = 0;
+//        for (Hero hero : this.heroList) {
+//            System.out.println(++count + ". " + hero.getHeroName());
+//
+//            System.out.print("\tBad against: ");
+//            int index = 0;
+//            for (Hero each : hero.getWeakWithHeroes()) {
+//                if (index == hero.getWeakWithHeroes().size() - 1) {
+//                    System.out.print(each.getHeroName() + "\n");
+//                } else {
+//                    System.out.print(each.getHeroName() + ", ");
+//                }
+//                index++;
+//            }
+//
+//            index = 0;
+//            System.out.print("\tGood against: ");
+//            for (Hero each : hero.getStrongWithHeroes()) {
+//                if (index == hero.getStrongWithHeroes().size() - 1) {
+//                    System.out.print(each.getHeroName() + "\n");
+//                } else {
+//                    System.out.print(each.getHeroName() + ", ");
+//                }
+//                index++;
+//            }
+//
+//            index = 0;
+//            System.out.print("\tWorks well with: ");
+//            for (Hero each : hero.getComboWithHeroes()) {
+//                if (index == hero.getComboWithHeroes().size() - 1) {
+//                    System.out.print(each.getHeroName() + "\n");
+//                } else {
+//                    System.out.print(each.getHeroName() + ", ");
+//                }
+//                index++;
+//            }
+//
+//        }
     }
 
     public void getListOfHero() {
@@ -56,6 +106,12 @@ public class Crawler {
                         for (String eachTag : listTags) {
                             String aTag = Utils.getHtmlOpenTag(eachTag, "a");
                             heroName = Utils.getHtmlAttributeValue(aTag, "title");
+
+                            /* Normalize string, some hero have special character such as Nature's Prophet */
+                            if (heroName.contains("&#39;")) {
+                                heroName = heroName.replaceAll("&#39;", "'");
+                            }
+                            
                             heroLink = ConstantManager.URL_DOTA2WIKI + Utils.getHtmlAttributeValue(aTag, "href");
 
                             /* Set new Hero */
@@ -89,6 +145,7 @@ public class Crawler {
 
     public void crawlRole() {
         String document = getRoleDataFromHtml(ConstantManager.URL_DOTA2WIKI_ROLE);
+
         try {
             StAXParser.parseXMLRolesOfHeroes(document, this.heroList);
         } catch (Exception e) {
@@ -100,35 +157,74 @@ public class Crawler {
         int count = 0;
         for (Map.Entry<String, String> entry : this.linksOfHeroes_DotaWiki.entrySet()) {
             String document = getSkillDataFromHtml(entry.getValue());
+
             Hero hero = null;
             int index = -1;
+
             for (Hero each : this.heroList) {
                 index++;
                 if (each.getHeroName().equals(entry.getKey())) {
                     hero = each;
+                    break;
                 }
             } // end for heroList
+
             try {
                 /* parse data by StAX */
                 StAXParser.parseXMLHeroData(document, hero);
-                
+
                 /* Set back hero to ArrayList */
                 this.heroList.set(index, hero);
-                
+
                 /* Sleep for 2s to prevent DDOS protection */
                 count++;
                 if (count % 40 == 0) {
                     Thread.sleep(2000);
                 }
-                
+
             } catch (InterruptedException ex) {
                 Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
-            } 
+            }
         } // end for linksOfHeroes.entrySet()
+    }
+
+    public void crawlCounterHeroes() {
+        int count = 0;
+        for (Map.Entry<String, String> entry : this.linksOfCounterHeroes.entrySet()) {
+            String document = getCounterHeroesFromHtml(entry.getValue());
+
+            Hero hero = null;
+            int index = -1;
+
+            for (Hero each : this.heroList) {
+                index++;
+                if (each.getHeroName().equals(entry.getKey())) {
+                    hero = each;
+                    break;
+                }
+            } // end for heroList
+
+            try {
+                /* Parse data by StAX */
+                StAXParser.parseXMLCounterHeroData(document, this.heroList, hero);
+
+                /* Set back hero to ArrayList */
+                this.heroList.set(index, hero);
+
+                /* Sleep for 2s to prevent DDOS protection */
+                count++;
+                if (count % 40 == 0) {
+                    Thread.sleep(2000);
+                }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public String getRoleDataFromHtml(String url) {
         String doc = "";
+
         try {
             BufferedReader bReader = BufferedReaderProvider.getBufferedReader(url);
 
@@ -153,7 +249,7 @@ public class Crawler {
         }
 
         /* Hard code fix <i> tag error */
-        doc = doc.replaceAll("<i></div></i>", "<i></i></div>"); 
+        doc = doc.replaceAll("<i></div></i>", "<i></i></div>");
 
         doc = "<root>" + doc + "</root>";
         return doc;
@@ -161,6 +257,7 @@ public class Crawler {
 
     public String getSkillDataFromHtml(String url) {
         String doc = "";
+
         try {
             BufferedReader bReader = BufferedReaderProvider.getBufferedReader(url);
 
@@ -184,8 +281,44 @@ public class Crawler {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         doc = "<root>" + doc + "</root>";
+        return doc;
+    }
+
+    public String getCounterHeroesFromHtml(String url) {
+        String doc = "";
+
+        try {
+            BufferedReader bReader = BufferedReaderProvider.getBufferedReader(url);
+
+            String line;
+            boolean correctContent = false;
+
+            while ((line = bReader.readLine()) != null) {
+                if (correctContent && line.contains("<!--")) {
+                    break;
+                }
+
+                if (correctContent) {
+                    doc += line;
+                }
+
+                if (line.contains("id=\"Bad_against")) {
+                    correctContent = true;
+                    doc += line;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        /* Normalize some special characters */
+        if (doc.contains("&#39;")) {
+            doc = doc.replaceAll("&#39;", "'");
+        }
+
+        doc = "<root>" + doc + "</root>";
+        doc = Utils.autoCloseImgTag(doc);
         return doc;
     }
 }
