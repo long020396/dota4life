@@ -29,14 +29,15 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "Role")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r"),
-    @NamedQuery(name = "Role.findById", query = "SELECT r FROM Role r WHERE r.id = :id"),
-    @NamedQuery(name = "Role.findByRoleName", query = "SELECT r FROM Role r WHERE r.roleName = :roleName"),
-    @NamedQuery(name = "Role.findByDescription", query = "SELECT r FROM Role r WHERE r.description = :description")})
+    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r")
+    , @NamedQuery(name = "Role.findById", query = "SELECT r FROM Role r WHERE r.id = :id")
+    , @NamedQuery(name = "Role.findByRoleName", query = "SELECT r FROM Role r WHERE r.roleName = :roleName")
+    , @NamedQuery(name = "Role.findByDescription", query = "SELECT r FROM Role r WHERE r.description = :description")})
 public class Role implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
@@ -117,5 +118,5 @@ public class Role implements Serializable {
     public String toString() {
         return "entities.Role[ id=" + id + " ]";
     }
-    
+
 }

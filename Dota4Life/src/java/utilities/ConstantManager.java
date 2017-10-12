@@ -10,8 +10,8 @@ public class ConstantManager {
     public static String URL_DOTA2WIKI_HOME = "https://dota2.gamepedia.com/Dota_2_Wiki";
     public static String URL_DOTA2WIKI_HEROES = "https://dota2.gamepedia.com/Heroes";
     public static String URL_DOTA2WIKI_ROLE = "https://dota2.gamepedia.com/Role";
-    /* Dota offcial page */
-    public static String URL_DOTA = "http://www.dota2.com/play/";
+    /* Play Dota page */
+    public static String URL_PLAYDOTA_HEROES = "http://playdota.vn/dota2/heroes";
     
     /* Regular Expression */
     public static String REGEX_NUMBER = "\\d+";

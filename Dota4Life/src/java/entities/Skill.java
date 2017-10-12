@@ -27,27 +27,28 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "Skill")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Skill.findAll", query = "SELECT s FROM Skill s"),
-    @NamedQuery(name = "Skill.findById", query = "SELECT s FROM Skill s WHERE s.id = :id"),
-    @NamedQuery(name = "Skill.findBySkillName", query = "SELECT s FROM Skill s WHERE s.skillName = :skillName"),
-    @NamedQuery(name = "Skill.findBySkillImg", query = "SELECT s FROM Skill s WHERE s.skillImg = :skillImg"),
-    @NamedQuery(name = "Skill.findByAbility", query = "SELECT s FROM Skill s WHERE s.ability = :ability"),
-    @NamedQuery(name = "Skill.findByAffect", query = "SELECT s FROM Skill s WHERE s.affect = :affect"),
-    @NamedQuery(name = "Skill.findByDamageType", query = "SELECT s FROM Skill s WHERE s.damageType = :damageType"),
-    @NamedQuery(name = "Skill.findByDescription", query = "SELECT s FROM Skill s WHERE s.description = :description"),
-    @NamedQuery(name = "Skill.findByCoolDown", query = "SELECT s FROM Skill s WHERE s.coolDown = :coolDown"),
-    @NamedQuery(name = "Skill.findByMana", query = "SELECT s FROM Skill s WHERE s.mana = :mana"),
-    @NamedQuery(name = "Skill.findByDamage", query = "SELECT s FROM Skill s WHERE s.damage = :damage"),
-    @NamedQuery(name = "Skill.findByDuration", query = "SELECT s FROM Skill s WHERE s.duration = :duration"),
-    @NamedQuery(name = "Skill.findByScepterNote", query = "SELECT s FROM Skill s WHERE s.scepterNote = :scepterNote"),
-    @NamedQuery(name = "Skill.findByLinkenNote", query = "SELECT s FROM Skill s WHERE s.linkenNote = :linkenNote"),
-    @NamedQuery(name = "Skill.findByBkbNote", query = "SELECT s FROM Skill s WHERE s.bkbNote = :bkbNote"),
-    @NamedQuery(name = "Skill.findByMantaNote", query = "SELECT s FROM Skill s WHERE s.mantaNote = :mantaNote"),
-    @NamedQuery(name = "Skill.findBySilverNote", query = "SELECT s FROM Skill s WHERE s.silverNote = :silverNote")})
+    @NamedQuery(name = "Skill.findAll", query = "SELECT s FROM Skill s")
+    , @NamedQuery(name = "Skill.findById", query = "SELECT s FROM Skill s WHERE s.id = :id")
+    , @NamedQuery(name = "Skill.findBySkillName", query = "SELECT s FROM Skill s WHERE s.skillName = :skillName")
+    , @NamedQuery(name = "Skill.findBySkillImg", query = "SELECT s FROM Skill s WHERE s.skillImg = :skillImg")
+    , @NamedQuery(name = "Skill.findByAbility", query = "SELECT s FROM Skill s WHERE s.ability = :ability")
+    , @NamedQuery(name = "Skill.findByAffect", query = "SELECT s FROM Skill s WHERE s.affect = :affect")
+    , @NamedQuery(name = "Skill.findByDamageType", query = "SELECT s FROM Skill s WHERE s.damageType = :damageType")
+    , @NamedQuery(name = "Skill.findByDescription", query = "SELECT s FROM Skill s WHERE s.description = :description")
+    , @NamedQuery(name = "Skill.findByCoolDown", query = "SELECT s FROM Skill s WHERE s.coolDown = :coolDown")
+    , @NamedQuery(name = "Skill.findByMana", query = "SELECT s FROM Skill s WHERE s.mana = :mana")
+    , @NamedQuery(name = "Skill.findByDamage", query = "SELECT s FROM Skill s WHERE s.damage = :damage")
+    , @NamedQuery(name = "Skill.findByDuration", query = "SELECT s FROM Skill s WHERE s.duration = :duration")
+    , @NamedQuery(name = "Skill.findByScepterNote", query = "SELECT s FROM Skill s WHERE s.scepterNote = :scepterNote")
+    , @NamedQuery(name = "Skill.findByLinkenNote", query = "SELECT s FROM Skill s WHERE s.linkenNote = :linkenNote")
+    , @NamedQuery(name = "Skill.findByBkbNote", query = "SELECT s FROM Skill s WHERE s.bkbNote = :bkbNote")
+    , @NamedQuery(name = "Skill.findByMantaNote", query = "SELECT s FROM Skill s WHERE s.mantaNote = :mantaNote")
+    , @NamedQuery(name = "Skill.findBySilverNote", query = "SELECT s FROM Skill s WHERE s.silverNote = :silverNote")})
 public class Skill implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
@@ -262,5 +263,5 @@ public class Skill implements Serializable {
     public String toString() {
         return "entities.Skill[ id=" + id + " ]";
     }
-    
+
 }

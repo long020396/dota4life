@@ -29,118 +29,81 @@ public class Crawler {
 //        crawlRole();
 //        crawlHero();
         crawlCounterHeroes();
-//        Map.Entry<String, String> entry = this.linksOfCounterHeroes.entrySet().iterator().next();
-//        String document = getCounterHeroesFromHtml(entry.getValue());
-//        Hero hero = null;
-//        for (Hero each : this.heroList) {
-//            if (each.getHeroName().equals(entry.getKey())) {
-//                hero = each;
-//                break;
-//            }
-//        }
-//        StAXParser.parseXMLCounterHeroData(document, this.heroList, hero);
-
-//        int count = 0;
-//        for (Hero hero : this.heroList) {
-//            System.out.println(++count + ". " + hero.getHeroName());
-//
-//            System.out.print("\tBad against: ");
-//            int index = 0;
-//            for (Hero each : hero.getWeakWithHeroes()) {
-//                if (index == hero.getWeakWithHeroes().size() - 1) {
-//                    System.out.print(each.getHeroName() + "\n");
-//                } else {
-//                    System.out.print(each.getHeroName() + ", ");
-//                }
-//                index++;
-//            }
-//
-//            index = 0;
-//            System.out.print("\tGood against: ");
-//            for (Hero each : hero.getStrongWithHeroes()) {
-//                if (index == hero.getStrongWithHeroes().size() - 1) {
-//                    System.out.print(each.getHeroName() + "\n");
-//                } else {
-//                    System.out.print(each.getHeroName() + ", ");
-//                }
-//                index++;
-//            }
-//
-//            index = 0;
-//            System.out.print("\tWorks well with: ");
-//            for (Hero each : hero.getComboWithHeroes()) {
-//                if (index == hero.getComboWithHeroes().size() - 1) {
-//                    System.out.print(each.getHeroName() + "\n");
-//                } else {
-//                    System.out.print(each.getHeroName() + ", ");
-//                }
-//                index++;
-//            }
-//
-//        }
     }
 
+//    public void getListOfHero() {
+//        try {
+//            BufferedReader bReader = BufferedReaderProvider.getBufferedReader(ConstantManager.URL_DOTA2WIKI_HOME);
+//
+//            boolean correctContent = false;
+//            String line;
+//            String attributeName = null;
+//            String heroName = null;
+//            String heroLink = null;
+//            Attribute attribute = null;
+//
+//            while ((line = bReader.readLine()) != null) {
+//
+//                if (correctContent) {
+//                    if (line.contains("<th")) {
+//                        String aTag = Utils.getHtmlOpenTag(line, "a");
+//                        attributeName = Utils.getHtmlAttributeValue(aTag, "title");
+//                        attribute = new Attribute();
+//                        attribute.setAttributeName(attributeName);
+//                    }
+//
+//                    if (line.contains("<td")) {
+//                        String[] listTags = line.split(">, <");
+//                        for (String eachTag : listTags) {
+//                            String aTag = Utils.getHtmlOpenTag(eachTag, "a");
+//                            heroName = Utils.getHtmlAttributeValue(aTag, "title");
+//
+//                            /* Normalize string, some hero have special character such as Nature's Prophet */
+//                            if (heroName.contains("&#39;")) {
+//                                heroName = heroName.replaceAll("&#39;", "'");
+//                            }
+//                            
+//                            heroLink = ConstantManager.URL_DOTA2WIKI + Utils.getHtmlAttributeValue(aTag, "href");
+//
+//                            /* Set new Hero */
+//                            Hero hero = new Hero();
+//                            hero.setHeroName(heroName);
+//                            hero.setAttributeID(attribute);
+//
+//                            /* Add Hero to List */
+//                            this.heroList.add(hero);
+//
+//                            /* Add link to HashMap of page Dota Wiki */
+//                            this.linksOfHeroes_DotaWiki.put(heroName, heroLink);
+//                            this.linksOfCounterHeroes.put(heroName, heroLink + "/Counters");
+//                            
+//                            /* Add link to HashMap of page Dota Official */
+//                            if (heroName.contains("-")) {
+//                                heroName = heroName.replaceAll("-", "");
+//                            }
+//                            if (heroName.equals("Nature's Prophet")) {
+//                                heroName = "Furion";
+//                            }
+//                            
+//                        }
+//                    }
+//                }
+//
+//                if (line.contains("<table style=\"text-align:center")) {
+//                    correctContent = true;
+//                }
+//
+//                if (correctContent && line.contains("</table")) {
+//                    break;
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+    
     public void getListOfHero() {
-        try {
-            BufferedReader bReader = BufferedReaderProvider.getBufferedReader(ConstantManager.URL_DOTA2WIKI_HOME);
-
-            boolean correctContent = false;
-            String line;
-            String attributeName = null;
-            String heroName = null;
-            String heroLink = null;
-            Attribute attribute = null;
-
-            while ((line = bReader.readLine()) != null) {
-
-                if (correctContent) {
-                    if (line.contains("<th")) {
-                        String aTag = Utils.getHtmlOpenTag(line, "a");
-                        attributeName = Utils.getHtmlAttributeValue(aTag, "title");
-                        attribute = new Attribute();
-                        attribute.setAttributeName(attributeName);
-                    }
-
-                    if (line.contains("<td")) {
-                        String[] listTags = line.split(">, <");
-                        for (String eachTag : listTags) {
-                            String aTag = Utils.getHtmlOpenTag(eachTag, "a");
-                            heroName = Utils.getHtmlAttributeValue(aTag, "title");
-
-                            /* Normalize string, some hero have special character such as Nature's Prophet */
-                            if (heroName.contains("&#39;")) {
-                                heroName = heroName.replaceAll("&#39;", "'");
-                            }
-                            
-                            heroLink = ConstantManager.URL_DOTA2WIKI + Utils.getHtmlAttributeValue(aTag, "href");
-
-                            /* Set new Hero */
-                            Hero hero = new Hero();
-                            hero.setHeroName(heroName);
-                            hero.setAttributeID(attribute);
-
-                            /* Add Hero to List */
-                            this.heroList.add(hero);
-
-                            /* Add link to HashMap */
-                            this.linksOfHeroes_DotaWiki.put(heroName, heroLink);
-                            this.linksOfCounterHeroes.put(heroName, heroLink + "/Counters");
-
-                        }
-                    }
-                }
-
-                if (line.contains("<table style=\"text-align:center")) {
-                    correctContent = true;
-                }
-
-                if (correctContent && line.contains("</table")) {
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        
     }
 
     public void crawlRole() {

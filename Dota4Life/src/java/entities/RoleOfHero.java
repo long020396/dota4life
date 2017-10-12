@@ -27,12 +27,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "RoleOfHero")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "RoleOfHero.findAll", query = "SELECT r FROM RoleOfHero r"),
-    @NamedQuery(name = "RoleOfHero.findById", query = "SELECT r FROM RoleOfHero r WHERE r.id = :id")})
+    @NamedQuery(name = "RoleOfHero.findAll", query = "SELECT r FROM RoleOfHero r")
+    , @NamedQuery(name = "RoleOfHero.findById", query = "SELECT r FROM RoleOfHero r WHERE r.id = :id")})
 public class RoleOfHero implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
@@ -98,5 +99,5 @@ public class RoleOfHero implements Serializable {
     public String toString() {
         return "entities.RoleOfHero[ id=" + id + " ]";
     }
-    
+
 }

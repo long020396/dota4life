@@ -32,21 +32,25 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "Hero")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Hero.findAll", query = "SELECT h FROM Hero h"),
-    @NamedQuery(name = "Hero.findById", query = "SELECT h FROM Hero h WHERE h.id = :id"),
-    @NamedQuery(name = "Hero.findByHeroName", query = "SELECT h FROM Hero h WHERE h.heroName = :heroName"),
-    @NamedQuery(name = "Hero.findByHeroImg", query = "SELECT h FROM Hero h WHERE h.heroImg = :heroImg"),
-    @NamedQuery(name = "Hero.findByLore", query = "SELECT h FROM Hero h WHERE h.lore = :lore")})
+    @NamedQuery(name = "Hero.findAll", query = "SELECT h FROM Hero h")
+    , @NamedQuery(name = "Hero.findById", query = "SELECT h FROM Hero h WHERE h.id = :id")
+    , @NamedQuery(name = "Hero.findByHeroName", query = "SELECT h FROM Hero h WHERE h.heroName = :heroName")
+    , @NamedQuery(name = "Hero.findByHeroOldName", query = "SELECT h FROM Hero h WHERE h.heroOldName = :heroOldName")
+    , @NamedQuery(name = "Hero.findByHeroImg", query = "SELECT h FROM Hero h WHERE h.heroImg = :heroImg")
+    , @NamedQuery(name = "Hero.findByLore", query = "SELECT h FROM Hero h WHERE h.lore = :lore")})
 public class Hero implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
     @Basic(optional = false)
     @Column(name = "HeroName")
     private String heroName;
+    @Column(name = "HeroOldName")
+    private String heroOldName;
     @Basic(optional = false)
     @Column(name = "HeroImg")
     private String heroImg;
@@ -78,15 +82,16 @@ public class Hero implements Serializable {
 
     public Hero() {
         this.roleOfHeroList = new ArrayList<RoleOfHero>();
-        this.weakWithHeroes = new ArrayList<Hero>();
         this.strongWithHeroes = new ArrayList<Hero>();
+        this.weakWithHeroes = new ArrayList<Hero>();
         this.comboWithHeroes = new ArrayList<Hero>();
     }
 
     public Hero(Integer id) {
         this.id = id;
-        this.weakWithHeroes = new ArrayList<Hero>();
+        this.roleOfHeroList = new ArrayList<RoleOfHero>();
         this.strongWithHeroes = new ArrayList<Hero>();
+        this.weakWithHeroes = new ArrayList<Hero>();
         this.comboWithHeroes = new ArrayList<Hero>();
     }
 
@@ -96,8 +101,8 @@ public class Hero implements Serializable {
         this.heroImg = heroImg;
         this.lore = lore;
         this.roleOfHeroList = new ArrayList<RoleOfHero>();
-        this.weakWithHeroes = new ArrayList<Hero>();
         this.strongWithHeroes = new ArrayList<Hero>();
+        this.weakWithHeroes = new ArrayList<Hero>();
         this.comboWithHeroes = new ArrayList<Hero>();
     }
 
@@ -115,6 +120,14 @@ public class Hero implements Serializable {
 
     public void setHeroName(String heroName) {
         this.heroName = heroName;
+    }
+
+    public String getHeroOldName() {
+        return heroOldName;
+    }
+
+    public void setHeroOldName(String heroOldName) {
+        this.heroOldName = heroOldName;
     }
 
     public String getHeroImg() {
@@ -234,5 +247,5 @@ public class Hero implements Serializable {
     public String toString() {
         return "entities.Hero[ id=" + id + " ]";
     }
-    
+
 }
