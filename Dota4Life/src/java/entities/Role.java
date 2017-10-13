@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -50,15 +51,18 @@ public class Role implements Serializable {
     private List<RoleOfHero> roleOfHeroList;
 
     public Role() {
+        this.roleOfHeroList = new ArrayList<RoleOfHero>();
     }
 
     public Role(Integer id) {
         this.id = id;
+        this.roleOfHeroList = new ArrayList<RoleOfHero>();
     }
 
     public Role(Integer id, String roleName) {
         this.id = id;
         this.roleName = roleName;
+        this.roleOfHeroList = new ArrayList<RoleOfHero>();
     }
 
     public Integer getId() {
@@ -118,5 +122,5 @@ public class Role implements Serializable {
     public String toString() {
         return "entities.Role[ id=" + id + " ]";
     }
-
+    
 }

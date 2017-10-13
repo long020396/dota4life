@@ -9,8 +9,6 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -39,6 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Skill.findByMana", query = "SELECT s FROM Skill s WHERE s.mana = :mana")
     , @NamedQuery(name = "Skill.findByDamage", query = "SELECT s FROM Skill s WHERE s.damage = :damage")
     , @NamedQuery(name = "Skill.findByDuration", query = "SELECT s FROM Skill s WHERE s.duration = :duration")
+    , @NamedQuery(name = "Skill.findByStunDuration", query = "SELECT s FROM Skill s WHERE s.stunDuration = :stunDuration")
+    , @NamedQuery(name = "Skill.findBySilenceDuration", query = "SELECT s FROM Skill s WHERE s.silenceDuration = :silenceDuration")
     , @NamedQuery(name = "Skill.findByScepterNote", query = "SELECT s FROM Skill s WHERE s.scepterNote = :scepterNote")
     , @NamedQuery(name = "Skill.findByLinkenNote", query = "SELECT s FROM Skill s WHERE s.linkenNote = :linkenNote")
     , @NamedQuery(name = "Skill.findByBkbNote", query = "SELECT s FROM Skill s WHERE s.bkbNote = :bkbNote")
@@ -48,7 +48,6 @@ public class Skill implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
@@ -75,6 +74,10 @@ public class Skill implements Serializable {
     private String damage;
     @Column(name = "Duration")
     private String duration;
+    @Column(name = "StunDuration")
+    private String stunDuration;
+    @Column(name = "SilenceDuration")
+    private String silenceDuration;
     @Column(name = "ScepterNote")
     private String scepterNote;
     @Column(name = "LinkenNote")
@@ -191,6 +194,22 @@ public class Skill implements Serializable {
         this.duration = duration;
     }
 
+    public String getStunDuration() {
+        return stunDuration;
+    }
+
+    public void setStunDuration(String stunDuration) {
+        this.stunDuration = stunDuration;
+    }
+
+    public String getSilenceDuration() {
+        return silenceDuration;
+    }
+
+    public void setSilenceDuration(String silenceDuration) {
+        this.silenceDuration = silenceDuration;
+    }
+
     public String getScepterNote() {
         return scepterNote;
     }
@@ -263,5 +282,5 @@ public class Skill implements Serializable {
     public String toString() {
         return "entities.Skill[ id=" + id + " ]";
     }
-
+    
 }

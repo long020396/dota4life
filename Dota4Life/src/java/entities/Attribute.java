@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -47,15 +48,18 @@ public class Attribute implements Serializable {
     private List<Hero> heroList;
 
     public Attribute() {
+        this.heroList = new ArrayList<Hero>();
     }
 
     public Attribute(Integer id) {
         this.id = id;
+        this.heroList = new ArrayList<Hero>();
     }
 
     public Attribute(Integer id, String attributeName) {
         this.id = id;
         this.attributeName = attributeName;
+        this.heroList = new ArrayList<Hero>();
     }
 
     public Integer getId() {
@@ -107,5 +111,5 @@ public class Attribute implements Serializable {
     public String toString() {
         return "entities.Attribute[ id=" + id + " ]";
     }
-
+    
 }
