@@ -267,9 +267,8 @@ System.out.println("Error on parsing hero: " + hero.getHeroName());
                         roh.setRoleID(role);
                         roh.setHeroID(hero);
 
-                        List<RoleOfHero> rohList = hero.getRoleOfHeroList();
-                        rohList.add(roh);
-                        hero.setRoleOfHeroList(rohList);
+                        role.getRoleOfHeroList().add(roh);
+                        hero.getRoleOfHeroList().add(roh);
 
                         heroEntry = false;
                     } // end if heroEntry

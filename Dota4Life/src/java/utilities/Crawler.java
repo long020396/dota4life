@@ -14,90 +14,98 @@ public class Crawler {
 
     private List<Hero> heroList;
     private Map<String, String> linksOfHeroes_DotaWiki;
-    private Map<String, String> linksOfHeroes_PlayDota;
+    private Map<String, String> linksOfHeroes_Devilesk;
     private Map<String, String> linksOfCounterHeroes;
 
     public Crawler() {
         this.heroList = new ArrayList<Hero>();
         this.linksOfHeroes_DotaWiki = new HashMap<String, String>();
-        this.linksOfHeroes_PlayDota = new HashMap<String, String>();
+        this.linksOfHeroes_Devilesk = new HashMap<String, String>();
         this.linksOfCounterHeroes = new HashMap<String, String>();
     }
 
     public void crawlData() {
         getListOfHero();
-//        int count = 0;
-//        for (Map.Entry<String, String> entry : this.linksOfHeroes_DotaWiki.entrySet()) {
-//            System.out.println(++count + ". " + entry.getKey() + ": " + entry.getValue() + "\n");
-//        }
-//        crawlRole();
+        crawlRole();
 //        crawlHero();
-        crawlCounterHeroes();
+//        crawlCounterHeroes();
     }
 
     public void getListOfHero() {
         try {
-            BufferedReader bReader = BufferedReaderProvider.getBufferedReader(ConstantManager.URL_DOTA2WIKI_HOME);
-
+            BufferedReader bReader = BufferedReaderProvider.getBufferedReader(ConstantManager.URL_DEVILESK_HEROES);
+            
             boolean correctContent = false;
-            String line;
-            String attributeName = null;
+            boolean heroEntry = false;
+            
+            String line = null;
             String heroName = null;
             String heroLink = null;
-            Attribute attribute = null;
-
+            
+            int attrInt = 0;
+            int divClassRow = 1;
+            
+            Attribute strength = new Attribute();
+            strength.setAttributeName("Strength");
+            Attribute agility = new Attribute();
+            agility.setAttributeName("Agility");
+            Attribute intelligence = new Attribute();
+            intelligence.setAttributeName("Intelligence");
+            
             while ((line = bReader.readLine()) != null) {
-
+                
                 if (correctContent) {
-                    if (line.contains("<th")) {
-                        String aTag = Utils.getHtmlOpenTag(line, "a");
-                        attributeName = Utils.getHtmlAttributeValue(aTag, "title");
-                        attribute = new Attribute();
-                        attribute.setAttributeName(attributeName);
+                    if (line.contains("hero-block")) {
+                        attrInt++;
                     }
-
-                    if (line.contains("<td")) {
-                        String[] listTags = line.split(">, <");
-                        for (String eachTag : listTags) {
-                            String aTag = Utils.getHtmlOpenTag(eachTag, "a");
-                            heroName = Utils.getHtmlAttributeValue(aTag, "title");
-
-                            /* Normalize string, some hero have special character such as Nature's Prophet */
-                            if (heroName.contains("&#39;")) {
-                                heroName = heroName.replaceAll("&#39;", "'");
-                            }
-                            
-                            heroLink = ConstantManager.URL_DOTA2WIKI + Utils.getHtmlAttributeValue(aTag, "href");
-
-                            /* Set new Hero */
-                            Hero hero = new Hero();
-                            hero.setHeroName(heroName);
-                            hero.setAttributeID(attribute);
-
-                            /* Add Hero to List */
-                            this.heroList.add(hero);
-
-                            /* Add link to HashMap of page Dota Wiki */
-                            this.linksOfHeroes_DotaWiki.put(heroName, heroLink);
-                            this.linksOfCounterHeroes.put(heroName, heroLink + "/Counters");
-                            
-                            /* Add link to HashMap of page Dota Official */
-                            if (heroName.contains("-")) {
-                                heroName = heroName.replaceAll("-", "");
-                            }
-                            if (heroName.equals("Nature's Prophet")) {
-                                heroName = "Furion";
-                            }
-                            
+                    
+                    if (heroEntry) {
+                        heroName = Utils.getHtmlAttributeValue(line, "title");
+                        
+                        /* Set link for heroes in Devilesk */
+                        this.linksOfHeroes_Devilesk.put(heroName, heroLink);
+                        
+                        
+                        /* Set link for heroes in Devilesk */
+                        String tmpHeroName = heroName.replaceAll(" ", "_");
+                        this.linksOfHeroes_DotaWiki.put(heroName, ConstantManager.URL_DOTA2WIKI + "/" + tmpHeroName);
+                        this.linksOfCounterHeroes.put(heroName, ConstantManager.URL_DOTA2WIKI + "/" + tmpHeroName + "/Counters");
+                        
+                        /* Create hero */
+                        Hero hero = new Hero();
+                        hero.setHeroName(heroName);
+                        switch (attrInt) {
+                            case 1:
+                                strength.getHeroList().add(hero);
+                                hero.setAttributeID(strength);
+                                break;
+                            case 2:
+                                agility.getHeroList().add(hero);
+                                hero.setAttributeID(agility);
+                                break;
+                            default:
+                                intelligence.getHeroList().add(hero);
+                                hero.setAttributeID(intelligence);
                         }
+                        this.heroList.add(hero);
+                        
+                        heroEntry = false;
+                    }
+                    
+                    if (line.contains("class=\"hero\"")) {
+                        heroEntry = true;
+                        heroLink = ConstantManager.URL_DEVILESK_HOME + Utils.getHtmlAttributeValue(line, "href");
                     }
                 }
-
-                if (line.contains("<table style=\"text-align:center")) {
-                    correctContent = true;
+                
+                if (line.contains("class=\"row")) {
+                    if (divClassRow == 2) {
+                        correctContent = true;
+                    }
+                    divClassRow++;
                 }
-
-                if (correctContent && line.contains("</table")) {
+                
+                if (correctContent && line.contains("</section")) {
                     break;
                 }
             }
