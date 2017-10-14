@@ -66,8 +66,8 @@ public class Utils {
     }
 
     /* Function to close unclosed <img> tag */
-    public static String autoCloseImgTag(String input) {
-        int beginIndex = input.indexOf("<img", 0);
+    public static String autoCloseTag(String input, String tag) {
+        int beginIndex = input.indexOf("<" + tag, 0);
         while (beginIndex >= 0) {
             int endIndex = input.indexOf(">", beginIndex) + 1;
             String slash = input.substring(endIndex - 2, endIndex - 1);
@@ -75,7 +75,7 @@ public class Utils {
             if (!slash.equals("/")) {
                 input = input.substring(0, endIndex - 1) + "/" + input.substring(endIndex - 1);
             }
-            beginIndex = input.indexOf("<img", endIndex);
+            beginIndex = input.indexOf("<" + tag, endIndex);
         }
 
         return input;

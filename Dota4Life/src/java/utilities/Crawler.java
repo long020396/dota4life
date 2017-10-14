@@ -26,8 +26,8 @@ public class Crawler {
 
     public void crawlData() {
         getListOfHero();
-        crawlRole();
-//        crawlHero();
+//        crawlRole();
+        crawlHero();
 //        crawlCounterHeroes();
     }
 
@@ -126,8 +126,8 @@ public class Crawler {
 
     public void crawlHero() {
         int count = 0;
-        for (Map.Entry<String, String> entry : this.linksOfHeroes_DotaWiki.entrySet()) {
-            String document = getSkillDataFromHtml(entry.getValue());
+        for (Map.Entry<String, String> entry : this.linksOfHeroes_Devilesk.entrySet()) {
+            String document = getHeroDataFromHtml(entry.getValue());
 
             Hero hero = null;
             int index = -1;
@@ -147,10 +147,10 @@ public class Crawler {
                 /* Set back hero to ArrayList */
                 this.heroList.set(index, hero);
 
-                /* Sleep for 2s to prevent DDOS protection */
+                /* Sleep for 2s to prevent DDoS protection */
                 count++;
-                if (count % 40 == 0) {
-                    Thread.sleep(2000);
+                if (count % 20 == 0) {
+                    Thread.sleep(1000);
                 }
 
             } catch (InterruptedException ex) {
@@ -182,7 +182,7 @@ public class Crawler {
                 /* Set back hero to ArrayList */
                 this.heroList.set(index, hero);
 
-                /* Sleep for 2s to prevent DDOS protection */
+                /* Sleep for 2s to prevent DDoS protection */
                 count++;
                 if (count % 40 == 0) {
                     Thread.sleep(2000);
@@ -208,7 +208,7 @@ public class Crawler {
                 }
 
                 if (correctContent) {
-                    doc += line;
+                    doc += line.trim();
                 }
 
                 if (line.contains("<span class=\"mw-headline\" id=\"Official_roles\">Official roles</span>")) {
@@ -226,7 +226,7 @@ public class Crawler {
         return doc;
     }
 
-    public String getSkillDataFromHtml(String url) {
+    public String getHeroDataFromHtml(String url) {
         String doc = "";
 
         try {
@@ -236,17 +236,17 @@ public class Crawler {
             boolean correctContent = false;
 
             while ((line = bReader.readLine()) != null) {
-                if (line.contains("<span class=\"mw-headline\" id=\"Talents\">Talents</span>")) {
+                if (correctContent && line.contains("col-md-12 patch-history")) {
                     break;
                 }
 
                 if (correctContent) {
-                    doc += line;
+                    doc += line.trim();
                 }
 
-                if (line.contains("<table class=\"infobox\" style=\"text-align:center; font-size:88%; line-height:1.5em; white-space:nowrap;\">")) {
+                if (line.contains("col-md-4 col-md-push-8")) {
                     correctContent = true;
-                    doc += line;
+                    doc += line.trim();
                 }
             }
         } catch (Exception e) {
@@ -254,6 +254,9 @@ public class Crawler {
         }
 
         doc = "<root>" + doc + "</root>";
+        doc = Utils.autoCloseTag(doc, "img");
+        doc = Utils.autoCloseTag(doc, "br");
+        doc = doc.replace("\\\"", "\"");
         return doc;
     }
 
@@ -272,12 +275,12 @@ public class Crawler {
                 }
 
                 if (correctContent) {
-                    doc += line;
+                    doc += line.trim();
                 }
 
                 if (line.contains("id=\"Bad_against")) {
                     correctContent = true;
-                    doc += line;
+                    doc += line.trim();
                 }
             }
         } catch (Exception e) {
@@ -289,7 +292,7 @@ public class Crawler {
         }
 
         doc = "<root>" + doc + "</root>";
-        doc = Utils.autoCloseImgTag(doc);
+        doc = Utils.autoCloseTag(doc, "img");
         return doc;
     }
 }

@@ -37,6 +37,12 @@ public class StAXParser {
 
             /* Flag variables for parser */
             boolean skillEntry = false;
+            boolean bioEntry = false;
+            boolean bioContent = false;
+            boolean skillNameEntry = false;
+            
+            String lore = null;
+            String heroImg = null;
 
             /* HashMap for String for better performance to set null */
             HashMap<String, String> skillData = new HashMap<String, String>();
@@ -65,30 +71,80 @@ public class StAXParser {
                 /* Check start element */
                 if (event.isStartElement()) {
                     StartElement startElement = event.asStartElement();
-
-                    /* If element is <div> */
-                    if (startElement.getName().toString().equals("div")) {
-                        if (!skillEntry) {
-                            Attribute attr = startElement.getAttributeByName(new QName("style"));
-                            if (attr != null) {
-                                if (attr.getValue().equals("flex: 0 1 450px; margin-right: 15px; vertical-align: top; background-color: #EAEAEA;")) {
-                                    skillEntry = true;
-                                }
+                    
+                    if (startElement.getName().toString().equals("img")) {
+                        Attribute attr = startElement.getAttributeByName(new QName("class"));
+                        if (attr != null) {
+                            if (attr.getValue().contains("hero_portrait")) {
+                                // Get attribute name src in tag
+                                heroImg = startElement.getAttributeByName(new QName("src")).getValue();
+                                hero.setHeroImg(heroImg);
                             }
                         }
-                    } // end of start tag <div>
-
+                    } // end of open tag <img>
+                    
+                    if (startElement.getName().toString().equals("div")) {
+                        Attribute attr = startElement.getAttributeByName(new QName("class"));
+                        if (attr != null) {
+                            
+                            if (attr.getValue().contains("hero-bio")) {
+                                bioEntry = true;
+                            }
+                            
+                            if (attr.getValue().contains("ability panel panel-default")) {
+                                skillEntry = true;
+                                skill = new Skill();
+                            }
+                            
+                            if (attr.getValue().contains("abilityname")) {
+                                skillNameEntry = true;
+                            }
+                        }
+                    } // end of open tag <div>
+                    
+                    if (startElement.getName().toString().equals("small")) {
+                        if (bioEntry) {
+                            bioContent = true;
+                        }
+                        
+                    } // end of open tag <div>
                 } // end if startElement
 
                 /* Check characters */
                 if (event.isCharacters()) {
-
+                    String str = event.asCharacters().getData();
+                    
+                    if (bioContent) {
+                        str = str.replaceAll("\\\"", "\"");
+                        if (lore == null) {
+                            lore = str;
+                        } else {
+                            lore = "<br/>" + str;
+                        }
+                    }
+                    
+                    if (skillNameEntry) {
+                        skillData.put("skillName", str);
+                    }
                 } // end if characters
 
                 /* Check end element */
                 if (event.isEndElement()) {
                     EndElement endElement = event.asEndElement();
-
+                    
+                    if (endElement.getName().toString().equals("small")) {
+                        if (bioContent) {
+                            bioEntry = false;
+                            bioContent = false;
+                        }
+                    }
+                    
+                    if (endElement.getName().toString().equals("div")) {
+                        if (skillNameEntry) {
+                            skillNameEntry = false;
+                        }
+                    }
+                    
                 } // end if endElement
 
             } // end while 
