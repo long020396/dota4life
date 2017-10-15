@@ -2,6 +2,7 @@ package utilities;
 
 import entities.Attribute;
 import entities.Hero;
+import entities.Skill;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,49 +29,56 @@ public class Crawler {
         getListOfHero();
 //        crawlRole();
         crawlHero();
+        int count = 1;
+        for (Hero hero : this.heroList) {
+            System.out.println(count++ + ". " + hero.getHeroName() + ":");
+            for (Skill skill : hero.getSkillList()) {
+                System.out.println("\t" + skill.getSkillName());
+            }
+            System.out.println("-------------------------------------------------------");
+        }
 //        crawlCounterHeroes();
     }
 
     public void getListOfHero() {
         try {
             BufferedReader bReader = BufferedReaderProvider.getBufferedReader(ConstantManager.URL_DEVILESK_HEROES);
-            
+
             boolean correctContent = false;
             boolean heroEntry = false;
-            
+
             String line = null;
             String heroName = null;
             String heroLink = null;
-            
+
             int attrInt = 0;
             int divClassRow = 1;
-            
+
             Attribute strength = new Attribute();
             strength.setAttributeName("Strength");
             Attribute agility = new Attribute();
             agility.setAttributeName("Agility");
             Attribute intelligence = new Attribute();
             intelligence.setAttributeName("Intelligence");
-            
+
             while ((line = bReader.readLine()) != null) {
-                
+
                 if (correctContent) {
                     if (line.contains("hero-block")) {
                         attrInt++;
                     }
-                    
+
                     if (heroEntry) {
                         heroName = Utils.getHtmlAttributeValue(line, "title");
-                        
+
                         /* Set link for heroes in Devilesk */
                         this.linksOfHeroes_Devilesk.put(heroName, heroLink);
-                        
-                        
+
                         /* Set link for heroes in Devilesk */
                         String tmpHeroName = heroName.replaceAll(" ", "_");
                         this.linksOfHeroes_DotaWiki.put(heroName, ConstantManager.URL_DOTA2WIKI + "/" + tmpHeroName);
                         this.linksOfCounterHeroes.put(heroName, ConstantManager.URL_DOTA2WIKI + "/" + tmpHeroName + "/Counters");
-                        
+
                         /* Create hero */
                         Hero hero = new Hero();
                         hero.setHeroName(heroName);
@@ -88,23 +96,23 @@ public class Crawler {
                                 hero.setAttributeID(intelligence);
                         }
                         this.heroList.add(hero);
-                        
+
                         heroEntry = false;
                     }
-                    
+
                     if (line.contains("class=\"hero\"")) {
                         heroEntry = true;
                         heroLink = ConstantManager.URL_DEVILESK_HOME + Utils.getHtmlAttributeValue(line, "href");
                     }
                 }
-                
+
                 if (line.contains("class=\"row")) {
                     if (divClassRow == 2) {
                         correctContent = true;
                     }
                     divClassRow++;
                 }
-                
+
                 if (correctContent && line.contains("</section")) {
                     break;
                 }
@@ -113,7 +121,7 @@ public class Crawler {
             e.printStackTrace();
         }
     }
-    
+
     public void crawlRole() {
         String document = getRoleDataFromHtml(ConstantManager.URL_DOTA2WIKI_ROLE);
 
@@ -149,7 +157,7 @@ public class Crawler {
 
                 /* Sleep for 2s to prevent DDoS protection */
                 count++;
-                if (count % 20 == 0) {
+                if (count % 10 == 0) {
                     Thread.sleep(1000);
                 }
 

@@ -87,4 +87,8 @@ public class Utils {
             entrySet.setValue(null);
         }
     }
+    
+    public String downloadImage(){
+        return null;
+    }
 }

@@ -36,13 +36,25 @@ public class StAXParser {
             reader = fact.createXMLEventReader(new InputStreamReader(is, "UTF-8"));
 
             /* Flag variables for parser */
+            boolean strongTag = false;
+            boolean tdTag = false;
+            boolean firstTdTag = true;
             boolean skillEntry = false;
             boolean bioEntry = false;
             boolean bioContent = false;
             boolean skillNameEntry = false;
-            
+            boolean abilityOrType = false;
+            boolean abilityEntry = false;
+            boolean damageTypeEntry = false;
+            boolean descriptionEntry = false;
+            boolean coolDownEntry = false;
+            boolean manaCostEntry = false;
+            boolean durationEntry = false;
+            boolean stunDurationEntry = false;
+            boolean silenceDurationEntry = false;
+            boolean damageEntry = false;
+
             String lore = null;
-            String heroImg = null;
 
             /* HashMap for String for better performance to set null */
             HashMap<String, String> skillData = new HashMap<String, String>();
@@ -54,13 +66,10 @@ public class StAXParser {
             skillData.put("description", null);
             skillData.put("damage", null);
             skillData.put("duration", null);
+            skillData.put("stunDuration", null);
+            skillData.put("silenceDuration", null);
             skillData.put("coolDown", null);
             skillData.put("manaCost", null);
-            skillData.put("scepterNote", null);
-            skillData.put("linkenNote", null);
-            skillData.put("bkbNote", null);
-            skillData.put("mantaNote", null);
-            skillData.put("silverNote", null);
 
             /* Entity */
             Skill skill = null;
@@ -71,49 +80,94 @@ public class StAXParser {
                 /* Check start element */
                 if (event.isStartElement()) {
                     StartElement startElement = event.asStartElement();
-                    
+
                     if (startElement.getName().toString().equals("img")) {
                         Attribute attr = startElement.getAttributeByName(new QName("class"));
                         if (attr != null) {
                             if (attr.getValue().contains("hero_portrait")) {
-                                // Get attribute name src in tag
-                                heroImg = startElement.getAttributeByName(new QName("src")).getValue();
-                                hero.setHeroImg(heroImg);
+                                /* Set heroImg */
+                                hero.setHeroImg(startElement.getAttributeByName(new QName("src")).getValue());
+                            } else if (attr.getValue().contains("ability_portrait")) {
+                                /* Set skillImg */
+                                skillData.put("skillImg", startElement.getAttributeByName(new QName("src")).getValue());
                             }
                         }
                     } // end of open tag <img>
-                    
+
                     if (startElement.getName().toString().equals("div")) {
                         Attribute attr = startElement.getAttributeByName(new QName("class"));
                         if (attr != null) {
-                            
+
                             if (attr.getValue().contains("hero-bio")) {
                                 bioEntry = true;
                             }
-                            
+
                             if (attr.getValue().contains("ability panel panel-default")) {
                                 skillEntry = true;
                                 skill = new Skill();
                             }
-                            
+
                             if (attr.getValue().contains("abilityname")) {
                                 skillNameEntry = true;
                             }
+
+                            if (attr.getValue().contains("col-md-10")) {
+                                descriptionEntry = true;
+                            }
+
                         }
                     } // end of open tag <div>
-                    
+
                     if (startElement.getName().toString().equals("small")) {
                         if (bioEntry) {
                             bioContent = true;
                         }
-                        
-                    } // end of open tag <div>
+                    } // end of open tag <small>
+
+                    if (startElement.getName().toString().equals("span")) {
+                        Attribute attr = startElement.getAttributeByName(new QName("class"));
+                        if (attr != null) {
+
+                            if (attr.getValue().contains("col-md-6")) {
+                                if (skillData.get("skillName") == null) {
+                                    skillEntry = false;
+                                    skillNameEntry = false;
+                                } else {
+                                    abilityOrType = true;
+                                }
+                            }
+                        }
+                    } // end of open tag <span>
+
+                    if (startElement.getName().toString().equals("strong")) {
+                        strongTag = true;
+                    } // end of open tag <span>
+
+                    if (startElement.getName().toString().equals("br")) {
+                        if (descriptionEntry) {
+                            skillData.put("description", skillData.get("description") + "<br/>");
+                        }
+                    } // end of open tag <br>
+
+                    if (startElement.getName().toString().equals("tr")) {
+                        if (skillEntry) {
+                            firstTdTag = true;
+                        }
+                    } // end of open tag <tr>
+
+                    if (startElement.getName().toString().equals("td")) {
+                        if (skillEntry) {
+                            tdTag = true;
+                        }
+                    } // end of open tag <td>
+
                 } // end if startElement
 
                 /* Check characters */
                 if (event.isCharacters()) {
                     String str = event.asCharacters().getData();
-                    
+
+                    /* Get lore */
                     if (bioContent) {
                         str = str.replaceAll("\\\"", "\"");
                         if (lore == null) {
@@ -122,29 +176,142 @@ public class StAXParser {
                             lore = "<br/>" + str;
                         }
                     }
-                    
+
+                    /* Get skillName */
                     if (skillNameEntry) {
                         skillData.put("skillName", str);
+                    }
+
+                    /* Get ability or damageType */
+                    if (abilityOrType) {
+                        if (strongTag) {
+                            if (str.contains("Ability")) {
+                                abilityEntry = true;
+                            } else if (str.contains("Damage")) {
+                                damageTypeEntry = true;
+                            }
+                        } else {
+                            if (abilityEntry) {
+                                skillData.put("ability", str);
+                                abilityEntry = false;
+                            }
+                            if (damageTypeEntry) {
+                                skillData.put("damageType", str);
+                                damageTypeEntry = false;
+                            }
+                        }
+                    }
+
+                    /* Get skillDescription */
+                    if (descriptionEntry) {
+                        if (skillData.get("description") == null) {
+                            skillData.put("description", str);
+                        } else {
+                            skillData.put("description", skillData.get("description") + str);
+                        }
+                    }
+
+                    /* Get skillData */
+                    if (tdTag) {
+                        if (firstTdTag) {
+                            if (str.equals("COOLDOWN:")) {
+                                coolDownEntry = true;
+                            } else if (str.equals("MANA COST:")) {
+                                manaCostEntry = true;
+                            } else if (str.equals("DURATION:")) {
+                                durationEntry = true;
+                            } else if (str.equals("STUN DURATION:")) {
+                                stunDurationEntry = true;
+                            } else if (str.equals("SILENCE DURATION:")) {
+                                silenceDurationEntry = true;
+                            } else if (str.equals("DAMAGE:")) {
+                                damageEntry = true;
+                            }
+                        } else {
+                            if (coolDownEntry) {
+                                skillData.put("coolDown", str);
+                                coolDownEntry = false;
+                            } else if (manaCostEntry) {
+                                skillData.put("manaCost", str);
+                                manaCostEntry = false;
+                            } else if (durationEntry) {
+                                skillData.put("duration", str);
+                                durationEntry = false;
+                            } else if (stunDurationEntry) {
+                                skillData.put("stunDuration", str);
+                                stunDurationEntry = false;
+                            } else if (silenceDurationEntry) {
+                                skillData.put("silenceDuration", str);
+                                silenceDurationEntry = false;
+                            } else if (damageEntry) {
+                                skillData.put("damage", str);
+                                damageEntry = false;
+                            }
+                        }
                     }
                 } // end if characters
 
                 /* Check end element */
                 if (event.isEndElement()) {
                     EndElement endElement = event.asEndElement();
-                    
+
                     if (endElement.getName().toString().equals("small")) {
                         if (bioContent) {
                             bioEntry = false;
                             bioContent = false;
                         }
                     }
-                    
+
                     if (endElement.getName().toString().equals("div")) {
                         if (skillNameEntry) {
                             skillNameEntry = false;
                         }
+
+                        if (descriptionEntry) {
+                            descriptionEntry = false;
+                        }
                     }
-                    
+
+                    if (endElement.getName().toString().equals("strong")) {
+                        strongTag = false;
+                    }
+
+                    if (endElement.getName().toString().equals("span")) {
+                        if (abilityOrType) {
+                            abilityOrType = false;
+                        }
+                    }
+
+                    if (endElement.getName().toString().equals("table")) {
+                        if (skillEntry) {
+                            skillEntry = false;
+
+                            /* Set skillData to Skill entitiy*/
+                            skill.setSkillName(skillData.get("skillName"));
+                            skill.setSkillImg(skillData.get("skillImg"));
+                            skill.setAbility(skillData.get("ability"));
+                            skill.setDamageType(skillData.get("damageType"));
+                            skill.setDescription(skillData.get("description"));
+                            skill.setDamage(skillData.get("damage"));
+                            skill.setDuration(skillData.get("duration"));
+                            skill.setStunDuration(skillData.get("stunDuration"));
+                            skill.setSilenceDuration(skillData.get("silenceDuration"));
+                            skill.setCoolDown(skillData.get("coolDown"));
+                            skill.setMana(skillData.get("manaCost"));
+
+                            hero.getSkillList().add(skill);
+
+                            Utils.setAllToNull(skillData);
+                        }
+                    }
+
+                    if (endElement.getName().toString().equals("td")) {
+                        if (skillEntry) {
+                            tdTag = false;
+                            firstTdTag = false;
+                        }
+                    }
+
                 } // end if endElement
 
             } // end while 
@@ -247,7 +414,7 @@ public class StAXParser {
 
         } catch (XMLStreamException ex) {
 //            Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
-System.out.println("Error on parsing hero: " + hero.getHeroName());
+            System.out.println("Error on parsing hero: " + hero.getHeroName());
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
