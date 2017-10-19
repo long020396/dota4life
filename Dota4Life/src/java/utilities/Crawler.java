@@ -27,17 +27,19 @@ public class Crawler {
 
     public void crawlData() {
         getListOfHero();
-//        crawlRole();
+        crawlRole();
         crawlHero();
-        int count = 1;
+        crawlCounterHeroes();
         for (Hero hero : this.heroList) {
-            System.out.println(count++ + ". " + hero.getHeroName() + ":");
+            hero.setHeroImg(Utils.downloadImage(ConstantManager.PATH_MEDIA, "\\" + hero.getHeroName(), hero.getHeroName(), hero.getHeroImg()));
             for (Skill skill : hero.getSkillList()) {
-                System.out.println("\t" + skill.getSkillName());
+                if (skill.getSkillImg() == null) {
+                    hero.getSkillList().remove(skill);
+                }
+                skill.setSkillImg(Utils.downloadImage(ConstantManager.PATH_MEDIA, "\\" + hero.getHeroName(), skill.getSkillName(), skill.getSkillImg()));
             }
-            System.out.println("-------------------------------------------------------");
         }
-//        crawlCounterHeroes();
+        
     }
 
     public void getListOfHero() {
@@ -157,7 +159,7 @@ public class Crawler {
 
                 /* Sleep for 2s to prevent DDoS protection */
                 count++;
-                if (count % 10 == 0) {
+                if (count % 50 == 0) {
                     Thread.sleep(1000);
                 }
 
@@ -192,8 +194,8 @@ public class Crawler {
 
                 /* Sleep for 2s to prevent DDoS protection */
                 count++;
-                if (count % 40 == 0) {
-                    Thread.sleep(2000);
+                if (count % 50 == 0) {
+                    Thread.sleep(1000);
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);

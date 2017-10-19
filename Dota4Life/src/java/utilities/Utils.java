@@ -1,7 +1,13 @@
 package utilities;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import javax.imageio.ImageIO;
 
 public class Utils {
 
@@ -71,7 +77,7 @@ public class Utils {
         while (beginIndex >= 0) {
             int endIndex = input.indexOf(">", beginIndex) + 1;
             String slash = input.substring(endIndex - 2, endIndex - 1);
-            
+
             if (!slash.equals("/")) {
                 input = input.substring(0, endIndex - 1) + "/" + input.substring(endIndex - 1);
             }
@@ -87,8 +93,29 @@ public class Utils {
             entrySet.setValue(null);
         }
     }
-    
-    public String downloadImage(){
-        return null;
+
+    public static String downloadImage(String realPath, String folderPath, String fileName, String uri) {
+        String filePath = "";
+        try {
+            String imgFormat = uri.substring(uri.lastIndexOf(".") + 1);
+            filePath = folderPath + "\\" + fileName + "." + imgFormat;
+
+            URL url = new URL(uri);
+            BufferedImage img = ImageIO.read(url);
+            File file = new File(realPath + filePath);
+            if (!file.exists()) {
+                if (!file.getParentFile().exists()) {
+                    file.getParentFile().mkdirs();
+                }
+                ImageIO.write(img, imgFormat, file);
+            }
+        } catch (MalformedURLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        filePath = filePath.replaceAll("\\\\", "/");
+        return filePath;
     }
 }
