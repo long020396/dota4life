@@ -30,15 +30,19 @@ public class Crawler {
         crawlRole();
         crawlHero();
         crawlCounterHeroes();
-        for (Hero hero : this.heroList) {
-            hero.setHeroImg(Utils.downloadImage(ConstantManager.PATH_MEDIA, "\\" + hero.getHeroName(), hero.getHeroName(), hero.getHeroImg()));
-            for (Skill skill : hero.getSkillList()) {
-                if (skill.getSkillImg() == null) {
-                    hero.getSkillList().remove(skill);
-                }
-                skill.setSkillImg(Utils.downloadImage(ConstantManager.PATH_MEDIA, "\\" + hero.getHeroName(), skill.getSkillName(), skill.getSkillImg()));
-            }
-        }
+        Hero hero = this.heroList.get(0);
+        String xmlString = Utils.marshallerToString(hero);
+        
+        System.out.println(xmlString);
+//        for (Hero hero : this.heroList) {
+//            hero.setHeroImg(Utils.downloadImage(ConstantManager.PATH_MEDIA, "\\" + hero.getHeroName(), hero.getHeroName(), hero.getHeroImg()));
+//            for (Skill skill : hero.getSkillList()) {
+//                if (skill.getSkillImg() == null) {
+//                    hero.getSkillList().remove(skill);
+//                }
+//                skill.setSkillImg(Utils.downloadImage(ConstantManager.PATH_MEDIA, "\\" + hero.getHeroName(), skill.getSkillName(), skill.getSkillImg()));
+//            }
+//        }
         
     }
 
@@ -305,4 +309,5 @@ public class Crawler {
         doc = Utils.autoCloseTag(doc, "img");
         return doc;
     }
+    
 }

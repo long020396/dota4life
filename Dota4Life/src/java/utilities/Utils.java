@@ -3,11 +3,14 @@ package utilities;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
 
 public class Utils {
 
@@ -117,5 +120,21 @@ public class Utils {
 
         filePath = filePath.replaceAll("\\\\", "/");
         return filePath;
+    }
+    
+    public static <T> String marshallerToString (T object) {
+        String xmlString = null;
+        try {
+            JAXBContext jaxb = JAXBContext.newInstance(object.getClass());
+            Marshaller marshaller = jaxb.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+            StringWriter sw = new StringWriter();
+            marshaller.marshal(object, sw);
+            
+            xmlString = sw.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return xmlString;
     }
 }
