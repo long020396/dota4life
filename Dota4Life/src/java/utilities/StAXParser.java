@@ -8,6 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -56,6 +57,8 @@ public class StAXParser {
 
             String lore = null;
 
+            int skillOrder = 1;
+
             /* HashMap for String for better performance to set null */
             HashMap<String, String> skillData = new HashMap<String, String>();
             skillData.put("skillName", null);
@@ -86,7 +89,7 @@ public class StAXParser {
                         if (attr != null) {
                             if (attr.getValue().contains("hero_portrait")) {
                                 /* Set heroImg */
-                                hero.setHeroImg(startElement.getAttributeByName(new QName("src")).getValue());
+                                hero.setImg(startElement.getAttributeByName(new QName("src")).getValue());
                             } else if (attr.getValue().contains("ability_portrait")) {
                                 /* Set skillImg */
                                 skillData.put("skillImg", startElement.getAttributeByName(new QName("src")).getValue());
@@ -105,6 +108,9 @@ public class StAXParser {
                             if (attr.getValue().contains("ability panel panel-default")) {
                                 skillEntry = true;
                                 skill = new Skill();
+                                skill.setId(0);
+                                skill.setHeroID(hero);
+                                skill.setSkillOrder(skillOrder);
                             }
 
                             if (attr.getValue().contains("abilityname")) {
@@ -173,13 +179,18 @@ public class StAXParser {
                         if (lore == null) {
                             lore = str;
                         } else {
-                            lore = "<br/>" + str;
+                            lore = lore + "<br/>" + str;
                         }
                     }
 
                     /* Get skillName */
                     if (skillNameEntry) {
-                        skillData.put("skillName", str);
+                        if (str.equals("Morph") || str.equals("Spring Early")) {
+                            skillNameEntry = false;
+                            skillEntry = false;
+                        } else {
+                            skillData.put("skillName", str);
+                        }
                     }
 
                     /* Get ability or damageType */
@@ -259,6 +270,7 @@ public class StAXParser {
                         if (bioContent) {
                             bioEntry = false;
                             bioContent = false;
+                            hero.setLore(lore);
                         }
                     }
 
@@ -287,8 +299,8 @@ public class StAXParser {
                             skillEntry = false;
 
                             /* Set skillData to Skill entitiy*/
-                            skill.setSkillName(skillData.get("skillName"));
-                            skill.setSkillImg(skillData.get("skillImg"));
+                            skill.setName(skillData.get("skillName"));
+                            skill.setImg(skillData.get("skillImg"));
                             skill.setAbility(skillData.get("ability"));
                             skill.setDamageType(skillData.get("damageType"));
                             skill.setDescription(skillData.get("description"));
@@ -299,7 +311,11 @@ public class StAXParser {
                             skill.setCoolDown(skillData.get("coolDown"));
                             skill.setMana(skillData.get("manaCost"));
 
+                            if (hero.getSkillList() == null) {
+                                hero.setSkillList(new ArrayList<Skill>());
+                            }
                             hero.getSkillList().add(skill);
+                            skillOrder++;
 
                             Utils.setAllToNull(skillData);
                         }
@@ -374,20 +390,31 @@ public class StAXParser {
                                 heroName = attr.getValue();
 
                                 for (Hero each : heroList) {
-                                    if (each.getHeroName().equals(heroName)) {
+                                    if (each.getName().equals(heroName)) {
 
                                         /* Add hero to the right list */
                                         switch (listType) {
                                             case 1: // [Weak with Heroes] list
-                                                hero.getWeakWithHeroes().add(each);
+                                                if (hero.getBadAgainstIDs() == null) {
+                                                    hero.setBadAgainstIDs(each.getId() + "");
+                                                } else {
+                                                    hero.setBadAgainstIDs(hero.getBadAgainstIDs() + ";" + each.getId());
+                                                }
                                                 break;
 
                                             case 2: // [Strong with Heroes] list
-                                                hero.getStrongWithHeroes().add(each);
+                                                if (hero.getGoodAgainstIDs() == null) {
+                                                    hero.setGoodAgainstIDs(each.getId() + "");
+                                                } else {
+                                                    hero.setGoodAgainstIDs(hero.getGoodAgainstIDs() + ";" + each.getId());
+                                                }
                                                 break;
 
                                             default: // [Combo with Heroes] list
-                                                hero.getComboWithHeroes().add(each);
+//                                                if (hero.getComboWithHeroes() == null) {
+//                                                    hero.setComboWithHeroes(new ArrayList<Hero>());
+//                                                }
+//                                                hero.getComboWithHeroes().add(each);
                                         }
                                         break;
                                     }
@@ -401,7 +428,8 @@ public class StAXParser {
                 /* Check characters */
                 if (event.isCharacters()) {
                     String str = event.asCharacters().getData();
-                    if (str.contains("Bad against") || str.contains("Good against") || str.contains("Works well")) {
+                    str = str.toUpperCase();
+                    if (str.contains("BAD AGAINST") || str.contains("GOOD AGAINST") || str.contains("WORKS WELL")) {
                         listType++;
                     }
                 }
@@ -413,8 +441,7 @@ public class StAXParser {
             }
 
         } catch (XMLStreamException ex) {
-//            Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Error on parsing hero: " + hero.getHeroName());
+            Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -423,7 +450,7 @@ public class StAXParser {
     }
 
     /* Function to parse XML document to data of Roles of many Heroes */
-    public static void parseXMLRolesOfHeroes(String document, List<Hero> heroList) throws XMLStreamException {
+    public static void parseXMLRolesOfHeroes(String document, List<Hero> heroList, List<Role> roleList, boolean roleListExisted) throws XMLStreamException {
         XMLInputFactory fact = XMLInputFactory.newInstance();
         fact.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, false);
         fact.setProperty(XMLInputFactory.IS_VALIDATING, false);
@@ -436,6 +463,8 @@ public class StAXParser {
 
             /* Flag variables for parser */
             boolean heroEntry = false;
+
+            int index = 0;
 
             /* Data by text */
             String roleName = null;
@@ -459,8 +488,20 @@ public class StAXParser {
 
                                 /* Get id value of span tag */
                                 roleName = startElement.getAttributeByName(new QName("id")).getValue().toString();
-                                role = new Role();
-                                role.setRoleName(roleName);
+                                if (roleListExisted) {
+                                    index = 0;
+                                    for (Role mainRole : roleList) {
+                                        if (mainRole.getName().equals(roleName)) {
+                                            role = mainRole;
+                                            break;
+                                        }
+                                        index++;
+                                    }
+                                } else {
+                                    role = new Role();
+                                    role.setName(roleName);
+                                    roleList.add(role);
+                                }
 
                             } // end if attr.getValue()
                         } // end if attr != null
@@ -481,7 +522,7 @@ public class StAXParser {
                     if (heroEntry) {
                         heroName = event.asCharacters().getData();
                         for (Hero each : heroList) {
-                            if (each.getHeroName().equals(heroName)) {
+                            if (each.getName().equals(heroName)) {
                                 hero = each;
                             }
                         } // end for heroList
@@ -490,8 +531,17 @@ public class StAXParser {
                         roh.setRoleID(role);
                         roh.setHeroID(hero);
 
-                        role.getRoleOfHeroList().add(roh);
-                        hero.getRoleOfHeroList().add(roh);
+                        if (roleListExisted) {
+                            if (role.getRoleOfHeroList() == null) {
+                                role.setRoleOfHeroList(new ArrayList<RoleOfHero>());
+                            }
+                            role.getRoleOfHeroList().add(roh);
+                            roleList.set(index, role);
+                            if (hero.getRoleOfHeroList() == null) {
+                                hero.setRoleOfHeroList(new ArrayList<RoleOfHero>());
+                            }
+                            hero.getRoleOfHeroList().add(roh);
+                        }
 
                         heroEntry = false;
                     } // end if heroEntry

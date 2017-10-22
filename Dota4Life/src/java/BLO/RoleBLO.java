@@ -64,4 +64,22 @@ public class RoleBLO {
         return role.getId();
     }
     
+    public void update(Role role) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            Role blo = em.find(Role.class, role.getId());
+            
+            blo.setName(role.getName());
+            blo.setRoleOfHeroList(role.getRoleOfHeroList());
+            em.persist(blo);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+    
 }

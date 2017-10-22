@@ -6,7 +6,6 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -32,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r")
     , @NamedQuery(name = "Role.findById", query = "SELECT r FROM Role r WHERE r.id = :id")
-    , @NamedQuery(name = "Role.findByRoleName", query = "SELECT r FROM Role r WHERE r.roleName = :roleName")
+    , @NamedQuery(name = "Role.findByName", query = "SELECT r FROM Role r WHERE r.name = :name")
     , @NamedQuery(name = "Role.findByDescription", query = "SELECT r FROM Role r WHERE r.description = :description")})
 public class Role implements Serializable {
 
@@ -43,26 +42,23 @@ public class Role implements Serializable {
     @Column(name = "ID")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "RoleName")
-    private String roleName;
+    @Column(name = "Name")
+    private String name;
     @Column(name = "Description")
     private String description;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleID")
     private List<RoleOfHero> roleOfHeroList;
 
     public Role() {
-        this.roleOfHeroList = new ArrayList<RoleOfHero>();
     }
 
     public Role(Integer id) {
         this.id = id;
-        this.roleOfHeroList = new ArrayList<RoleOfHero>();
     }
 
-    public Role(Integer id, String roleName) {
+    public Role(Integer id, String name) {
         this.id = id;
-        this.roleName = roleName;
-        this.roleOfHeroList = new ArrayList<RoleOfHero>();
+        this.name = name;
     }
 
     public Integer getId() {
@@ -73,12 +69,12 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getName() {
+        return name;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {

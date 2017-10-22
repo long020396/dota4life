@@ -6,7 +6,6 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -15,8 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -34,10 +31,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Hero.findAll", query = "SELECT h FROM Hero h")
     , @NamedQuery(name = "Hero.findById", query = "SELECT h FROM Hero h WHERE h.id = :id")
-    , @NamedQuery(name = "Hero.findByHeroName", query = "SELECT h FROM Hero h WHERE h.heroName = :heroName")
-    , @NamedQuery(name = "Hero.findByHeroOldName", query = "SELECT h FROM Hero h WHERE h.heroOldName = :heroOldName")
-    , @NamedQuery(name = "Hero.findByHeroImg", query = "SELECT h FROM Hero h WHERE h.heroImg = :heroImg")
-    , @NamedQuery(name = "Hero.findByLore", query = "SELECT h FROM Hero h WHERE h.lore = :lore")})
+    , @NamedQuery(name = "Hero.findByName", query = "SELECT h FROM Hero h WHERE h.name = :name")
+    , @NamedQuery(name = "Hero.findByOldName", query = "SELECT h FROM Hero h WHERE h.oldName = :oldName")
+    , @NamedQuery(name = "Hero.findByImg", query = "SELECT h FROM Hero h WHERE h.img = :img")
+    , @NamedQuery(name = "Hero.findByAttribute", query = "SELECT h FROM Hero h WHERE h.attribute = :attribute")
+    , @NamedQuery(name = "Hero.findByLore", query = "SELECT h FROM Hero h WHERE h.lore = :lore")
+    , @NamedQuery(name = "Hero.findByBadAgainstIDs", query = "SELECT h FROM Hero h WHERE h.badAgainstIDs = :badAgainstIDs")
+    , @NamedQuery(name = "Hero.findByGoodAgainstIDs", query = "SELECT h FROM Hero h WHERE h.goodAgainstIDs = :goodAgainstIDs")})
 public class Hero implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,66 +47,41 @@ public class Hero implements Serializable {
     @Column(name = "ID")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "HeroName")
-    private String heroName;
-    @Column(name = "HeroOldName")
-    private String heroOldName;
+    @Column(name = "Name")
+    private String name;
+    @Column(name = "OldName")
+    private String oldName;
     @Basic(optional = false)
-    @Column(name = "HeroImg")
-    private String heroImg;
+    @Column(name = "Img")
+    private String img;
+    @Basic(optional = false)
+    @Column(name = "Attribute")
+    private String attribute;
     @Basic(optional = false)
     @Column(name = "Lore")
     private String lore;
+    @Column(name = "BadAgainstIDs")
+    private String badAgainstIDs;
+    @Column(name = "GoodAgainstIDs")
+    private String goodAgainstIDs;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "heroID")
     private List<RoleOfHero> roleOfHeroList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "heroID")
     private List<Skill> skillList;
-    @JoinColumn(name = "AttributeID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private Attribute attributeID;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "strongWithHeroID")
-    private List<Hero> strongWithHeroes;
-    @JoinColumn(name = "StrongWithHeroID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private Hero strongWithHeroID;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "weakWithHeroID")
-    private List<Hero> weakWithHeroes;
-    @JoinColumn(name = "WeakWithHeroID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private Hero weakWithHeroID;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "comboWithHeroID")
-    private List<Hero> comboWithHeroes;
-    @JoinColumn(name = "ComboWithHeroID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private Hero comboWithHeroID;
 
     public Hero() {
-        this.roleOfHeroList = new ArrayList<RoleOfHero>();
-        this.skillList = new ArrayList<Skill>();
-        this.strongWithHeroes = new ArrayList<Hero>();
-        this.weakWithHeroes = new ArrayList<Hero>();
-        this.comboWithHeroes = new ArrayList<Hero>();
     }
 
     public Hero(Integer id) {
         this.id = id;
-        this.roleOfHeroList = new ArrayList<RoleOfHero>();
-        this.skillList = new ArrayList<Skill>();
-        this.strongWithHeroes = new ArrayList<Hero>();
-        this.weakWithHeroes = new ArrayList<Hero>();
-        this.comboWithHeroes = new ArrayList<Hero>();
     }
 
-    public Hero(Integer id, String heroName, String heroImg, String lore) {
+    public Hero(Integer id, String name, String img, String attribute, String lore) {
         this.id = id;
-        this.heroName = heroName;
-        this.heroImg = heroImg;
+        this.name = name;
+        this.img = img;
+        this.attribute = attribute;
         this.lore = lore;
-        this.roleOfHeroList = new ArrayList<RoleOfHero>();
-        this.skillList = new ArrayList<Skill>();
-        this.strongWithHeroes = new ArrayList<Hero>();
-        this.weakWithHeroes = new ArrayList<Hero>();
-        this.comboWithHeroes = new ArrayList<Hero>();
     }
 
     public Integer getId() {
@@ -117,28 +92,36 @@ public class Hero implements Serializable {
         this.id = id;
     }
 
-    public String getHeroName() {
-        return heroName;
+    public String getName() {
+        return name;
     }
 
-    public void setHeroName(String heroName) {
-        this.heroName = heroName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getHeroOldName() {
-        return heroOldName;
+    public String getOldName() {
+        return oldName;
     }
 
-    public void setHeroOldName(String heroOldName) {
-        this.heroOldName = heroOldName;
+    public void setOldName(String oldName) {
+        this.oldName = oldName;
     }
 
-    public String getHeroImg() {
-        return heroImg;
+    public String getImg() {
+        return img;
     }
 
-    public void setHeroImg(String heroImg) {
-        this.heroImg = heroImg;
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
     }
 
     public String getLore() {
@@ -147,6 +130,22 @@ public class Hero implements Serializable {
 
     public void setLore(String lore) {
         this.lore = lore;
+    }
+
+    public String getBadAgainstIDs() {
+        return badAgainstIDs;
+    }
+
+    public void setBadAgainstIDs(String badAgainstIDs) {
+        this.badAgainstIDs = badAgainstIDs;
+    }
+
+    public String getGoodAgainstIDs() {
+        return goodAgainstIDs;
+    }
+
+    public void setGoodAgainstIDs(String goodAgainstIDs) {
+        this.goodAgainstIDs = goodAgainstIDs;
     }
 
     @XmlTransient
@@ -165,65 +164,6 @@ public class Hero implements Serializable {
 
     public void setSkillList(List<Skill> skillList) {
         this.skillList = skillList;
-    }
-
-    public Attribute getAttributeID() {
-        return attributeID;
-    }
-
-    public void setAttributeID(Attribute attributeID) {
-        this.attributeID = attributeID;
-    }
-
-    @XmlTransient
-    public List<Hero> getStrongWithHeroes() {
-        return strongWithHeroes;
-    }
-
-    public void setStrongWithHeroes(List<Hero> strongWithHeroes) {
-        this.strongWithHeroes = strongWithHeroes;
-    }
-
-    public Hero getStrongWithHeroID() {
-        return strongWithHeroID;
-    }
-
-    public void setStrongWithHeroID(Hero strongWithHeroID) {
-        this.strongWithHeroID = strongWithHeroID;
-    }
-
-    @XmlTransient
-    public List<Hero> getWeakWithHeroes() {
-        return weakWithHeroes;
-    }
-
-    public void setWeakWithHeroes(List<Hero> weakWithHeroes) {
-        this.weakWithHeroes = weakWithHeroes;
-    }
-
-    public Hero getWeakWithHeroID() {
-        return weakWithHeroID;
-    }
-
-    public void setWeakWithHeroID(Hero weakWithHeroID) {
-        this.weakWithHeroID = weakWithHeroID;
-    }
-
-    @XmlTransient
-    public List<Hero> getComboWithHeroes() {
-        return comboWithHeroes;
-    }
-
-    public void setComboWithHeroes(List<Hero> comboWithHeroes) {
-        this.comboWithHeroes = comboWithHeroes;
-    }
-
-    public Hero getComboWithHeroID() {
-        return comboWithHeroID;
-    }
-
-    public void setComboWithHeroID(Hero comboWithHeroID) {
-        this.comboWithHeroID = comboWithHeroID;
     }
 
     @Override

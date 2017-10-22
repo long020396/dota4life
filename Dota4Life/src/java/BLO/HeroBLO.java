@@ -64,4 +64,24 @@ public class HeroBLO {
         return hero.getId();
     }
     
+    public void update(Hero hero) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Hero blo = em.find(Hero.class, hero.getId());
+            
+            blo.setRoleOfHeroList(hero.getRoleOfHeroList());
+            blo.setSkillList(hero.getSkillList());
+            blo.setBadAgainstIDs(hero.getBadAgainstIDs());
+            blo.setGoodAgainstIDs(hero.getGoodAgainstIDs());
+            
+            em.persist(blo);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            em.close();
+        }
+    }
+    
 }

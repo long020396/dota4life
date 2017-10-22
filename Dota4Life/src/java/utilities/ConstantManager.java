@@ -6,11 +6,8 @@ public class ConstantManager {
     public static final String PATH_PROJECT = "D:\\Education\\FPT\\XML\\Exercise\\Projects\\Dota4Life";
     public static final String PATH_MEDIA = PATH_PROJECT + "\\Media";
 
-    /* Servlet Name */
-    public static final String dispatchServlet = "DispatchServlet";
-
     /* Page URL */
- /* DotaWiki page */
+    /* DotaWiki page */
     public static final String URL_DOTA2WIKI = "https://dota2.gamepedia.com";
     public static final String URL_DOTA2WIKI_HOME = "https://dota2.gamepedia.com/Dota_2_Wiki";
     public static final String URL_DOTA2WIKI_ROLE = "https://dota2.gamepedia.com/Role";

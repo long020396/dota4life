@@ -1,7 +1,12 @@
 package utilities;
 
-import entities.Attribute;
+import BLO.HeroBLO;
+import BLO.RoleBLO;
+import BLO.RoleOfHeroBLO;
+import BLO.SkillBLO;
 import entities.Hero;
+import entities.Role;
+import entities.RoleOfHero;
 import entities.Skill;
 import java.io.BufferedReader;
 import java.util.ArrayList;
@@ -14,36 +19,52 @@ import java.util.logging.Logger;
 public class Crawler {
 
     private List<Hero> heroList;
+    private List<Role> roleList;
     private Map<String, String> linksOfHeroes_DotaWiki;
     private Map<String, String> linksOfHeroes_Devilesk;
     private Map<String, String> linksOfCounterHeroes;
 
     public Crawler() {
         this.heroList = new ArrayList<Hero>();
+        this.roleList = new ArrayList<Role>();
         this.linksOfHeroes_DotaWiki = new HashMap<String, String>();
         this.linksOfHeroes_Devilesk = new HashMap<String, String>();
         this.linksOfCounterHeroes = new HashMap<String, String>();
     }
 
-    public void crawlData() {
+    public void crawlDataAndSaveToDB() {
+        RoleBLO roleBLO = new RoleBLO();
+        HeroBLO heroBLO = new HeroBLO();
+        SkillBLO skillBLO = new SkillBLO();
+        RoleOfHeroBLO roleOfHeroBLO = new RoleOfHeroBLO();
+
         getListOfHero();
-        crawlRole();
         crawlHero();
+        for (Hero hero : this.heroList) {
+            hero.setImg(Utils.downloadImage(ConstantManager.PATH_MEDIA, "\\" + hero.getName(), hero.getName(), hero.getImg()));
+            for (Skill skill : hero.getSkillList()) {
+                skill.setImg(Utils.downloadImage(ConstantManager.PATH_MEDIA, "\\" + hero.getName(), skill.getName(), skill.getImg()));
+            }
+            heroBLO.add(hero);
+        }
         crawlCounterHeroes();
-        Hero hero = this.heroList.get(0);
-        String xmlString = Utils.marshallerToString(hero);
-        
-        System.out.println(xmlString);
-//        for (Hero hero : this.heroList) {
-//            hero.setHeroImg(Utils.downloadImage(ConstantManager.PATH_MEDIA, "\\" + hero.getHeroName(), hero.getHeroName(), hero.getHeroImg()));
-//            for (Skill skill : hero.getSkillList()) {
-//                if (skill.getSkillImg() == null) {
-//                    hero.getSkillList().remove(skill);
-//                }
-//                skill.setSkillImg(Utils.downloadImage(ConstantManager.PATH_MEDIA, "\\" + hero.getHeroName(), skill.getSkillName(), skill.getSkillImg()));
-//            }
-//        }
-        
+        for (Hero hero : this.heroList) {
+            heroBLO.update(hero);
+        }
+        crawlRole();
+        for (Role role : this.roleList) {
+            role.setRoleOfHeroList(null);
+        }
+        for (Hero hero : this.heroList) {
+            hero.setRoleOfHeroList(null);
+        }
+        for (Role role : this.roleList) {
+            roleBLO.add(role);
+        }
+        crawlRole();
+        for (Role role : this.roleList) {
+            roleBLO.update(role);
+        }
     }
 
     public void getListOfHero() {
@@ -59,13 +80,6 @@ public class Crawler {
 
             int attrInt = 0;
             int divClassRow = 1;
-
-            Attribute strength = new Attribute();
-            strength.setAttributeName("Strength");
-            Attribute agility = new Attribute();
-            agility.setAttributeName("Agility");
-            Attribute intelligence = new Attribute();
-            intelligence.setAttributeName("Intelligence");
 
             while ((line = bReader.readLine()) != null) {
 
@@ -87,19 +101,16 @@ public class Crawler {
 
                         /* Create hero */
                         Hero hero = new Hero();
-                        hero.setHeroName(heroName);
+                        hero.setName(heroName);
                         switch (attrInt) {
                             case 1:
-                                strength.getHeroList().add(hero);
-                                hero.setAttributeID(strength);
+                                hero.setAttribute("Strength");
                                 break;
                             case 2:
-                                agility.getHeroList().add(hero);
-                                hero.setAttributeID(agility);
+                                hero.setAttribute("Agility");
                                 break;
                             default:
-                                intelligence.getHeroList().add(hero);
-                                hero.setAttributeID(intelligence);
+                                hero.setAttribute("Intelligence");
                         }
                         this.heroList.add(hero);
 
@@ -132,7 +143,7 @@ public class Crawler {
         String document = getRoleDataFromHtml(ConstantManager.URL_DOTA2WIKI_ROLE);
 
         try {
-            StAXParser.parseXMLRolesOfHeroes(document, this.heroList);
+            StAXParser.parseXMLRolesOfHeroes(document, this.heroList, this.roleList, !this.roleList.isEmpty());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -148,7 +159,7 @@ public class Crawler {
 
             for (Hero each : this.heroList) {
                 index++;
-                if (each.getHeroName().equals(entry.getKey())) {
+                if (each.getName().equals(entry.getKey())) {
                     hero = each;
                     break;
                 }
@@ -183,7 +194,7 @@ public class Crawler {
 
             for (Hero each : this.heroList) {
                 index++;
-                if (each.getHeroName().equals(entry.getKey())) {
+                if (each.getName().equals(entry.getKey())) {
                     hero = each;
                     break;
                 }
@@ -292,7 +303,7 @@ public class Crawler {
                     doc += line.trim();
                 }
 
-                if (line.contains("id=\"Bad_against")) {
+                if (line.contains("id=\"Bad_against") || line.contains("id=\"Bad_Against")) {
                     correctContent = true;
                     doc += line.trim();
                 }
@@ -309,5 +320,23 @@ public class Crawler {
         doc = Utils.autoCloseTag(doc, "img");
         return doc;
     }
-    
+
+    public void saveToDatabase() {
+        RoleBLO roleBLO = new RoleBLO();
+        HeroBLO heroBLO = new HeroBLO();
+        SkillBLO skillBLO = new SkillBLO();
+        RoleOfHeroBLO roleOfHeroBLO = new RoleOfHeroBLO();
+        for (Role role : this.roleList) {
+            roleBLO.add(role);
+        }
+        for (Hero hero : this.heroList) {
+            heroBLO.add(hero);
+            for (Skill skill : hero.getSkillList()) {
+                skillBLO.add(skill);
+            }
+            for (RoleOfHero roleOfHero : hero.getRoleOfHeroList()) {
+                roleOfHeroBLO.add(roleOfHero);
+            }
+        }
+    }
 }

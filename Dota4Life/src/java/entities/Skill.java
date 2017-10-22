@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -27,8 +29,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Skill.findAll", query = "SELECT s FROM Skill s")
     , @NamedQuery(name = "Skill.findById", query = "SELECT s FROM Skill s WHERE s.id = :id")
-    , @NamedQuery(name = "Skill.findBySkillName", query = "SELECT s FROM Skill s WHERE s.skillName = :skillName")
-    , @NamedQuery(name = "Skill.findBySkillImg", query = "SELECT s FROM Skill s WHERE s.skillImg = :skillImg")
+    , @NamedQuery(name = "Skill.findByName", query = "SELECT s FROM Skill s WHERE s.name = :name")
+    , @NamedQuery(name = "Skill.findByImg", query = "SELECT s FROM Skill s WHERE s.img = :img")
+    , @NamedQuery(name = "Skill.findBySkillOrder", query = "SELECT s FROM Skill s WHERE s.skillOrder = :skillOrder")
     , @NamedQuery(name = "Skill.findByAbility", query = "SELECT s FROM Skill s WHERE s.ability = :ability")
     , @NamedQuery(name = "Skill.findByAffect", query = "SELECT s FROM Skill s WHERE s.affect = :affect")
     , @NamedQuery(name = "Skill.findByDamageType", query = "SELECT s FROM Skill s WHERE s.damageType = :damageType")
@@ -38,25 +41,24 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Skill.findByDamage", query = "SELECT s FROM Skill s WHERE s.damage = :damage")
     , @NamedQuery(name = "Skill.findByDuration", query = "SELECT s FROM Skill s WHERE s.duration = :duration")
     , @NamedQuery(name = "Skill.findByStunDuration", query = "SELECT s FROM Skill s WHERE s.stunDuration = :stunDuration")
-    , @NamedQuery(name = "Skill.findBySilenceDuration", query = "SELECT s FROM Skill s WHERE s.silenceDuration = :silenceDuration")
-    , @NamedQuery(name = "Skill.findByScepterNote", query = "SELECT s FROM Skill s WHERE s.scepterNote = :scepterNote")
-    , @NamedQuery(name = "Skill.findByLinkenNote", query = "SELECT s FROM Skill s WHERE s.linkenNote = :linkenNote")
-    , @NamedQuery(name = "Skill.findByBkbNote", query = "SELECT s FROM Skill s WHERE s.bkbNote = :bkbNote")
-    , @NamedQuery(name = "Skill.findByMantaNote", query = "SELECT s FROM Skill s WHERE s.mantaNote = :mantaNote")
-    , @NamedQuery(name = "Skill.findBySilverNote", query = "SELECT s FROM Skill s WHERE s.silverNote = :silverNote")})
+    , @NamedQuery(name = "Skill.findBySilenceDuration", query = "SELECT s FROM Skill s WHERE s.silenceDuration = :silenceDuration")})
 public class Skill implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "SkillName")
-    private String skillName;
+    @Column(name = "Name")
+    private String name;
     @Basic(optional = false)
-    @Column(name = "SkillImg")
-    private String skillImg;
+    @Column(name = "Img")
+    private String img;
+    @Basic(optional = false)
+    @Column(name = "SkillOrder")
+    private int skillOrder;
     @Column(name = "Ability")
     private String ability;
     @Column(name = "Affect")
@@ -78,16 +80,6 @@ public class Skill implements Serializable {
     private String stunDuration;
     @Column(name = "SilenceDuration")
     private String silenceDuration;
-    @Column(name = "ScepterNote")
-    private String scepterNote;
-    @Column(name = "LinkenNote")
-    private String linkenNote;
-    @Column(name = "BkbNote")
-    private String bkbNote;
-    @Column(name = "MantaNote")
-    private String mantaNote;
-    @Column(name = "SilverNote")
-    private String silverNote;
     @JoinColumn(name = "HeroID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Hero heroID;
@@ -99,10 +91,11 @@ public class Skill implements Serializable {
         this.id = id;
     }
 
-    public Skill(Integer id, String skillName, String skillImg, String description) {
+    public Skill(Integer id, String name, String img, int skillOrder, String description) {
         this.id = id;
-        this.skillName = skillName;
-        this.skillImg = skillImg;
+        this.name = name;
+        this.img = img;
+        this.skillOrder = skillOrder;
         this.description = description;
     }
 
@@ -114,20 +107,28 @@ public class Skill implements Serializable {
         this.id = id;
     }
 
-    public String getSkillName() {
-        return skillName;
+    public String getName() {
+        return name;
     }
 
-    public void setSkillName(String skillName) {
-        this.skillName = skillName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getSkillImg() {
-        return skillImg;
+    public String getImg() {
+        return img;
     }
 
-    public void setSkillImg(String skillImg) {
-        this.skillImg = skillImg;
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public int getSkillOrder() {
+        return skillOrder;
+    }
+
+    public void setSkillOrder(int skillOrder) {
+        this.skillOrder = skillOrder;
     }
 
     public String getAbility() {
@@ -208,46 +209,6 @@ public class Skill implements Serializable {
 
     public void setSilenceDuration(String silenceDuration) {
         this.silenceDuration = silenceDuration;
-    }
-
-    public String getScepterNote() {
-        return scepterNote;
-    }
-
-    public void setScepterNote(String scepterNote) {
-        this.scepterNote = scepterNote;
-    }
-
-    public String getLinkenNote() {
-        return linkenNote;
-    }
-
-    public void setLinkenNote(String linkenNote) {
-        this.linkenNote = linkenNote;
-    }
-
-    public String getBkbNote() {
-        return bkbNote;
-    }
-
-    public void setBkbNote(String bkbNote) {
-        this.bkbNote = bkbNote;
-    }
-
-    public String getMantaNote() {
-        return mantaNote;
-    }
-
-    public void setMantaNote(String mantaNote) {
-        this.mantaNote = mantaNote;
-    }
-
-    public String getSilverNote() {
-        return silverNote;
-    }
-
-    public void setSilverNote(String silverNote) {
-        this.silverNote = silverNote;
     }
 
     public Hero getHeroID() {
