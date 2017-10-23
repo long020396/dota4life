@@ -364,9 +364,6 @@ public class StAXParser {
             /* Data by text */
             String heroName = null;
 
-            /* Entity */
-            Hero tmpHero = null;
-
             while (reader.hasNext()) {
                 XMLEvent event = reader.nextEvent();
 
@@ -383,54 +380,52 @@ public class StAXParser {
                         }
                     } // end of start tag <div>
 
-                    if (startElement.getName().toString().equals("a")) {
-                        if (heroEntry) {
-                            Attribute attr = startElement.getAttributeByName(new QName("title"));
-                            if (attr != null) {
-                                heroName = attr.getValue();
-
-                                for (Hero each : heroList) {
-                                    if (each.getName().equals(heroName)) {
-
-                                        /* Add hero to the right list */
-                                        switch (listType) {
-                                            case 1: // [Weak with Heroes] list
-                                                if (hero.getBadAgainstIDs() == null) {
-                                                    hero.setBadAgainstIDs(each.getId() + "");
-                                                } else {
-                                                    hero.setBadAgainstIDs(hero.getBadAgainstIDs() + ";" + each.getId());
-                                                }
-                                                break;
-
-                                            case 2: // [Strong with Heroes] list
-                                                if (hero.getGoodAgainstIDs() == null) {
-                                                    hero.setGoodAgainstIDs(each.getId() + "");
-                                                } else {
-                                                    hero.setGoodAgainstIDs(hero.getGoodAgainstIDs() + ";" + each.getId());
-                                                }
-                                                break;
-
-                                            default: // [Combo with Heroes] list
-//                                                if (hero.getComboWithHeroes() == null) {
-//                                                    hero.setComboWithHeroes(new ArrayList<Hero>());
-//                                                }
-//                                                hero.getComboWithHeroes().add(each);
-                                        }
-                                        break;
-                                    }
-                                } // end hero search
-                            } // end if attr != null
-                            heroEntry = false;
-                        }
+                    if (startElement.getName().toString().equals("span")) {
+                        Attribute attr = startElement.getAttributeByName(new QName("style"));
+                        if (attr != null) {
+                            if (attr.getValue().contains("font-size:12pt;")) {
+                                heroEntry = true;
+                            }
+                        } // end if attr != null
                     } // end of start tag <a>
+
+                    if (startElement.getName().toString().equals("h2")) {
+                        listType++;
+                    }
                 }
 
                 /* Check characters */
                 if (event.isCharacters()) {
                     String str = event.asCharacters().getData();
-                    str = str.toUpperCase();
-                    if (str.contains("BAD AGAINST") || str.contains("GOOD AGAINST") || str.contains("WORKS WELL")) {
-                        listType++;
+                    if (heroEntry) {
+                        heroName = str;
+                        for (Hero each : heroList) {
+                            if (each.getName().equals(heroName)) {
+
+                                /* Add hero to the right list */
+                                switch (listType) {
+                                    case 1: // [Weak with Heroes] list
+                                        if (hero.getBadAgainstIDs() == null) {
+                                            hero.setBadAgainstIDs(each.getId() + "");
+                                        } else {
+                                            hero.setBadAgainstIDs(hero.getBadAgainstIDs() + ";" + each.getId());
+                                        }
+                                        break;
+
+                                    case 2: // [Strong with Heroes] list
+                                        if (hero.getGoodAgainstIDs() == null) {
+                                            hero.setGoodAgainstIDs(each.getId() + "");
+                                        } else {
+                                            hero.setGoodAgainstIDs(hero.getGoodAgainstIDs() + ";" + each.getId());
+                                        }
+                                        break;
+
+                                    default: // [Combo with Heroes] list
+                                }
+                                break;
+                            }
+                        } // end hero search
+                        heroEntry = false;
                     }
                 }
 

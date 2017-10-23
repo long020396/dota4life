@@ -25,14 +25,11 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/src/java/BLO/RoleOfHeroBLO.java</file>
+            <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/src/java/utilities/ConstantManager.java</file>
             <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/src/java/BLO/HeroBLO.java</file>
-            <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/src/java/servlets/GetHeroServlet.java</file>
+            <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/src/java/servlets/DispatchServlet.java</file>
             <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/src/java/entities/Hero.java</file>
             <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/src/java/utilities/StAXParser.java</file>
-            <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/src/java/utilities/Crawler.java</file>
-            <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/src/java/BLO/RoleBLO.java</file>
-            <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/src/java/entities/Role.java</file>
         </group>
     </open-files>
 </project-private>

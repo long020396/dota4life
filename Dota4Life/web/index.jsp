@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <jsp:forward page="/GetHeroServlet"/>
+        <jsp:forward page="/CrawlHeroesServlet"/>
         <h1>Hello World!</h1>
         <!-- Pha xi bo o ke -->
         <!-- Pha xi bo o ke -->

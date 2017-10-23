@@ -5,16 +5,16 @@
         <servlet-class>servlets.DispatchServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>GetHeroServlet</servlet-name>
-        <servlet-class>servlets.GetHeroServlet</servlet-class>
+        <servlet-name>CrawlHeroesServlet</servlet-name>
+        <servlet-class>servlets.CrawlHeroesServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DispatchServlet</servlet-name>
         <url-pattern>/DispatchServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>GetHeroServlet</servlet-name>
-        <url-pattern>/GetHeroServlet</url-pattern>
+        <servlet-name>CrawlHeroesServlet</servlet-name>
+        <url-pattern>/CrawlHeroesServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

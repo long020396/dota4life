@@ -17,7 +17,7 @@ import utilities.Crawler;
  *
  * @author Du
  */
-public class GetHeroServlet extends HttpServlet {
+public class CrawlHeroesServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,8 +32,8 @@ public class GetHeroServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-//        Crawler crawler = new Crawler();
-//        crawler.crawlDataAndSaveToDB();
+        Crawler crawler = new Crawler();
+        crawler.crawlDataAndSaveToDB();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

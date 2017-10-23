@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DispatchServlet extends HttpServlet {
 
+    private final String getHeroServlert = "GetHeroServlet";
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,6 +33,10 @@ public class DispatchServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        String action = request.getParameter("btnAction");
+        String url = "";
+        
         try {
             
         } finally {
