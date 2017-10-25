@@ -1,25 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Du
- */
 public class DispatchServlet extends HttpServlet {
 
-    private final String getHeroServlert = "GetHeroServlet";
-    
+    private final String crawlHeroesServlet = "CrawlHeroesServlet";
+    private final String getAllHeroesServlet = "GetAllHeroesServlet";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,13 +26,19 @@ public class DispatchServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
+
         String action = request.getParameter("btnAction");
         String url = "";
-        
+
         try {
-            
+            if (action == null) {
+                url = getAllHeroesServlet;
+            } else if (action.equals("")) {
+                url = "";
+            }
         } finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
             out.close();
         }
     }

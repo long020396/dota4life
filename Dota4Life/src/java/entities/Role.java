@@ -18,8 +18,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -28,6 +33,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "Role")
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "role", propOrder = {
+    "id",
+    "name",
+    "roleOfHeroList"})
 @NamedQueries({
     @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r")
     , @NamedQuery(name = "Role.findById", query = "SELECT r FROM Role r WHERE r.id = :id")
@@ -40,13 +50,18 @@ public class Role implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
+    @XmlElement
+    @XmlID
     private Integer id;
     @Basic(optional = false)
     @Column(name = "Name")
+    @XmlElement
     private String name;
     @Column(name = "Description")
+    @XmlTransient
     private String description;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleID")
+    @XmlElement
     private List<RoleOfHero> roleOfHeroList;
 
     public Role() {

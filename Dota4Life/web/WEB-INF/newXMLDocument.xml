@@ -1,2 +1,681 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<root>    <div class="col-md-4 col-md-push-8">        <div class="row">            <div class="col-md-12 text-center">                <div class="col-lg-8 form-group">                    <img class="hero_portrait img-rounded" src="http://media.steampowered.com/apps/dota2/images/heroes/meepo_lg.png"/>                </div>                <div class="col-lg-4 form-group">                                                            <img src="/media/images/pip_dire.png"/>                    <div>Dire</div>                </div>            </div>        </div>        <div class="col-md-12 form-group">            <div class="col-xs-4 text-center">                <img style="opacity:.33;" src="/media/images/pip_str.png"/>                <div>                    <span>23</span> + <span>1.6</span>                </div>            </div>            <div class="col-xs-4 text-center">                <img style="" src="/media/images/pip_agi.png"/>                <div>                    <span>23</span> + <span>2.2</span>                </div>            </div>            <div class="col-xs-4 text-center">                <img style="opacity:.33;" src="/media/images/pip_int.png"/>                <div>                    <span>20</span> + <span>1.6</span>                </div>            </div>        </div>        <table class="table">            <tbody>                <tr>                    <td>Movement Speed</td>                    <td class="text-right">315</td>                </tr>                <tr>                    <td>Turn Rate</td>                    <td class="text-right">0.65</td>                </tr>                <tr>                    <td>Day/Night Sight Range</td>                    <td class="text-right">1800/800</td>                </tr>                <tr>                    <td>Attack Range</td>                    <td class="text-right">150</td>                </tr>                <tr>                    <td>Missile Speed</td>                                        <td class="text-right">&mdash;</td>                                    </tr>                <tr>                    <td>Attack Point</td>                    <td class="text-right">0.38</td>                </tr>                <tr>                    <td>Base Attack Time</td>                    <td class="text-right">1.7</td>                </tr>            </tbody>        </table>        <table class="table table-condensed">            <thead>                <tr>                    <th>Level</th>                    <th class="text-right">1</th>                    <th class="text-right">16</th>                    <th class="text-right">25</th>                </tr>            </thead>            <tbody>                <tr>                    <td>Health</td>                    <td class="text-right">660</td>                    <td class="text-right">1180</td>                    <td class="text-right">1820</td>                </tr>                <tr>                    <td>Mana</td>                    <td class="text-right">315</td>                    <td class="text-right">627</td>                    <td class="text-right">1011</td>                </tr>                <tr>                    <td>Min Damage</td>                    <td class="text-right">43</td>                    <td class="text-right">78</td>                    <td class="text-right">115</td>                </tr>                <tr>                    <td>Max Damage</td>                    <td class="text-right">49</td>                    <td class="text-right">84</td>                    <td class="text-right">121</td>                </tr>                <tr>                    <td>Armor</td>                    <td class="text-right">2.22</td>                    <td class="text-right">7.12</td>                    <td class="text-right">12.3</td>                </tr>                <tr>                    <td><small>Attacks / Second</small></td>                    <td class="text-right">0.72</td>                    <td class="text-right">0.93</td>                    <td class="text-right">1.15</td>                </tr>            </tbody>        </table>        <table class="table table-condensed">            <thead>                <th>Level</th>                <th colspan="2">Talents</th>            </thead>            <tbody>                <tr>                <td>10</td>                <td>+4 Armor</td><td>+15 Damage</td>                </tr><tr>                <td>15</td>                <td>15% Lifesteal</td><td>+25 Movement Speed</td>                </tr><tr>                <td>20</td>                <td>10% Evasion</td><td>+25 Attack Speed</td>                </tr><tr>                <td>25</td>                <td>+400 Health</td><td>-3s Poof Cooldown</td>                </tr>            </tbody>        </table>        <div class="hero-bio">                            <div class="text-center"><strong>Bio</strong></div>                <small><p>\"If you ask me, life is all about who you know and what you can find. When you live up in the Riftshadow Ruins, just finding food can be tough. So you need to cut corners, you need to scrounge, you need to know your strengths. Some of the beasts up there can kill you, so you need a way to trap the weak and duck the strong. On the upside, the ruins have history, and history is worth a lot to some people. There used to be a palace there, where they had all these dark rituals. Bad stuff. If you survived the ceremony, they would shatter a crystal and split your soul into pieces. They made great art though! Sculptures and such. Let me tell you: sometimes you stumble onto some of those old carvings. Take a pack full of those to town and sell them, then get yourself food for a few weeks. If luck is really on your side, you might find a Riftshadow crystal. Get it appraised and start asking around. Someone always knows some crazy fool looking for this kind of thing. If all else fails, sell it to a Magus the next time one's in town. They love that stuff. Still, whatever you do, be careful handling those crystals. You do not want one to go off on you. It really hurts.\"</p></small>                    </div>    </div>    <div class="col-md-8 col-md-pull-4">                <div class="ability panel panel-default">          <div class="abilityname panel-heading">Earthbind</div>          <div class="panel-body">            <span class="col-md-6"><strong>Ability: </strong>Target Point</span>                      </div>          <div class="panel-body">            <div class="col-md-2"><img class="ability_portrait img-rounded" src="http://media.steampowered.com/apps/dota2/images/abilities/meepo_earthbind_hp2.png"/></div>            <div class="col-md-10">Tosses a net at the target point, pinning down all enemy units.  Earthbind prevents invisibility and blink.</div>          </div>            <table class="abilitydata table">                <tbody>                                        <tr>                        <td>COOLDOWN:</td>                        <td>20 / 16 / 12 / 8</td>                    </tr>                                        <tr>                        <td>MANA COST:</td>                        <td>100</td>                    </tr>                                    <tr>                        <td>DURATION:</td>                        <td>2.0</td>                    </tr>                    <tr>                        <td>RADIUS:</td>                        <td>220</td>                    </tr>                    <tr>                        <td>RANGE:</td>                        <td>500 / 750 / 1000 / 1250</td>                    </tr>                </tbody>            </table>        </div>        <div class="ability panel panel-default">          <div class="abilityname panel-heading">Poof</div>          <div class="panel-body">            <span class="col-md-6"><strong>Ability: </strong>Target Point, Target Unit</span>            <span class="col-md-6"><strong>Damage: </strong>Magical</span>          </div>          <div class="panel-body">            <div class="col-md-2"><img class="ability_portrait img-rounded" src="http://media.steampowered.com/apps/dota2/images/abilities/meepo_poof_hp2.png"/></div>            <div class="col-md-10">Drawing mystical energies from the earth, a Meepo can teleport to another Meepo or itself after channeling for 1.5 seconds, dealing damage in both the departure and arrival locations.</div>          </div>            <table class="abilitydata table">                <tbody>                                        <tr>                        <td>COOLDOWN:</td>                        <td>12 / 10 / 8 / 6</td>                    </tr>                                        <tr>                        <td>MANA COST:</td>                        <td>80</td>                    </tr>                                    <tr>                        <td>RADIUS:</td>                        <td>375</td>                    </tr>                </tbody>            </table>        </div>        <div class="ability panel panel-default">          <div class="abilityname panel-heading">Geostrike</div>          <div class="panel-body">            <span class="col-md-6"><strong>Ability: </strong>Passive</span>                      </div>          <div class="panel-body">            <div class="col-md-2"><img class="ability_portrait img-rounded" src="http://media.steampowered.com/apps/dota2/images/abilities/meepo_geostrike_hp2.png"/></div>            <div class="col-md-10">Meepo enchants his weapon to deal damage per second, as well as slow the movement speed of the attacked unit.  Geostrikes from multiple Meepos stack.</div>          </div>            <table class="abilitydata table">                <tbody>                                                                            <tr>                        <td>%MOVE SLOW:</td>                        <td>-5 / -10 / -15 / -20</td>                    </tr>                    <tr>                        <td>DURATION:</td>                        <td>2.0</td>                    </tr>                </tbody>            </table>        </div>        <div class="ability panel panel-default">          <div class="abilityname panel-heading">Divided We Stand</div>          <div class="panel-body">            <span class="col-md-6"><strong>Ability: </strong>Passive</span>                      </div>          <div class="panel-body">            <div class="col-md-2"><img class="ability_portrait img-rounded" src="http://media.steampowered.com/apps/dota2/images/abilities/meepo_divided_we_stand_hp2.png"/></div>            <div class="col-md-10">Meepo summons an imperfect, semi-autonomous duplicate of himself, which can gain gold and experience as he does and shares his experience, attributes and abilities. However, the clones cannot wield any items but the boots that Meepo himself wears.  If any of the clones die, they all die.<br/><br/>Upgradable by Aghanim's Scepter.</div>          </div>            <table class="abilitydata table">                <tbody>                                                                            <tr>                        <td>NUMBER OF MEEPOES:</td>                        <td>1 / 2 / 3</td>                    </tr>                </tbody>            </table>        </div>    </div></root>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<heroes>
+    <hero>
+        <heroId>1</heroId>
+        <heroName>Abaddon</heroName>
+        <heroImg>/Abaddon/Abaddon.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>2</heroId>
+        <heroName>Alchemist</heroName>
+        <heroImg>/Alchemist/Alchemist.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>3</heroId>
+        <heroName>Axe</heroName>
+        <heroImg>/Axe/Axe.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>4</heroId>
+        <heroName>Beastmaster</heroName>
+        <heroImg>/Beastmaster/Beastmaster.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>5</heroId>
+        <heroName>Brewmaster</heroName>
+        <heroImg>/Brewmaster/Brewmaster.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>6</heroId>
+        <heroName>Bristleback</heroName>
+        <heroImg>/Bristleback/Bristleback.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>7</heroId>
+        <heroName>Centaur Warrunner</heroName>
+        <heroImg>/Centaur Warrunner/Centaur Warrunner.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>8</heroId>
+        <heroName>Chaos Knight</heroName>
+        <heroImg>/Chaos Knight/Chaos Knight.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>9</heroId>
+        <heroName>Clockwerk</heroName>
+        <heroImg>/Clockwerk/Clockwerk.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>10</heroId>
+        <heroName>Doom</heroName>
+        <heroImg>/Doom/Doom.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>11</heroId>
+        <heroName>Dragon Knight</heroName>
+        <heroImg>/Dragon Knight/Dragon Knight.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>12</heroId>
+        <heroName>Earth Spirit</heroName>
+        <heroImg>/Earth Spirit/Earth Spirit.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>13</heroId>
+        <heroName>Earthshaker</heroName>
+        <heroImg>/Earthshaker/Earthshaker.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>14</heroId>
+        <heroName>Elder Titan</heroName>
+        <heroImg>/Elder Titan/Elder Titan.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>15</heroId>
+        <heroName>Huskar</heroName>
+        <heroImg>/Huskar/Huskar.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>16</heroId>
+        <heroName>Io</heroName>
+        <heroImg>/Io/Io.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>17</heroId>
+        <heroName>Kunkka</heroName>
+        <heroImg>/Kunkka/Kunkka.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>18</heroId>
+        <heroName>Legion Commander</heroName>
+        <heroImg>/Legion Commander/Legion Commander.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>19</heroId>
+        <heroName>Lifestealer</heroName>
+        <heroImg>/Lifestealer/Lifestealer.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>20</heroId>
+        <heroName>Lycan</heroName>
+        <heroImg>/Lycan/Lycan.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>21</heroId>
+        <heroName>Magnus</heroName>
+        <heroImg>/Magnus/Magnus.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>22</heroId>
+        <heroName>Night Stalker</heroName>
+        <heroImg>/Night Stalker/Night Stalker.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>23</heroId>
+        <heroName>Omniknight</heroName>
+        <heroImg>/Omniknight/Omniknight.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>24</heroId>
+        <heroName>Phoenix</heroName>
+        <heroImg>/Phoenix/Phoenix.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>25</heroId>
+        <heroName>Pudge</heroName>
+        <heroImg>/Pudge/Pudge.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>26</heroId>
+        <heroName>Sand King</heroName>
+        <heroImg>/Sand King/Sand King.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>27</heroId>
+        <heroName>Slardar</heroName>
+        <heroImg>/Slardar/Slardar.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>28</heroId>
+        <heroName>Spirit Breaker</heroName>
+        <heroImg>/Spirit Breaker/Spirit Breaker.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>29</heroId>
+        <heroName>Sven</heroName>
+        <heroImg>/Sven/Sven.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>30</heroId>
+        <heroName>Tidehunter</heroName>
+        <heroImg>/Tidehunter/Tidehunter.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>31</heroId>
+        <heroName>Timbersaw</heroName>
+        <heroImg>/Timbersaw/Timbersaw.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>32</heroId>
+        <heroName>Tiny</heroName>
+        <heroImg>/Tiny/Tiny.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>33</heroId>
+        <heroName>Treant Protector</heroName>
+        <heroImg>/Treant Protector/Treant Protector.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>34</heroId>
+        <heroName>Tusk</heroName>
+        <heroImg>/Tusk/Tusk.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>35</heroId>
+        <heroName>Underlord</heroName>
+        <heroImg>/Underlord/Underlord.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>36</heroId>
+        <heroName>Undying</heroName>
+        <heroImg>/Undying/Undying.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>37</heroId>
+        <heroName>Wraith King</heroName>
+        <heroImg>/Wraith King/Wraith King.png</heroImg>
+        <heroAttribute>Strength</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>38</heroId>
+        <heroName>Anti-Mage</heroName>
+        <heroImg>/Anti-Mage/Anti-Mage.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>39</heroId>
+        <heroName>Arc Warden</heroName>
+        <heroImg>/Arc Warden/Arc Warden.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>40</heroId>
+        <heroName>Bloodseeker</heroName>
+        <heroImg>/Bloodseeker/Bloodseeker.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>41</heroId>
+        <heroName>Bounty Hunter</heroName>
+        <heroImg>/Bounty Hunter/Bounty Hunter.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>42</heroId>
+        <heroName>Broodmother</heroName>
+        <heroImg>/Broodmother/Broodmother.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>43</heroId>
+        <heroName>Clinkz</heroName>
+        <heroImg>/Clinkz/Clinkz.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>44</heroId>
+        <heroName>Drow Ranger</heroName>
+        <heroImg>/Drow Ranger/Drow Ranger.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>45</heroId>
+        <heroName>Ember Spirit</heroName>
+        <heroImg>/Ember Spirit/Ember Spirit.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>46</heroId>
+        <heroName>Faceless Void</heroName>
+        <heroImg>/Faceless Void/Faceless Void.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>47</heroId>
+        <heroName>Gyrocopter</heroName>
+        <heroImg>/Gyrocopter/Gyrocopter.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>48</heroId>
+        <heroName>Juggernaut</heroName>
+        <heroImg>/Juggernaut/Juggernaut.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>49</heroId>
+        <heroName>Lone Druid</heroName>
+        <heroImg>/Lone Druid/Lone Druid.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>50</heroId>
+        <heroName>Luna</heroName>
+        <heroImg>/Luna/Luna.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>51</heroId>
+        <heroName>Medusa</heroName>
+        <heroImg>/Medusa/Medusa.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>52</heroId>
+        <heroName>Meepo</heroName>
+        <heroImg>/Meepo/Meepo.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>53</heroId>
+        <heroName>Mirana</heroName>
+        <heroImg>/Mirana/Mirana.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>54</heroId>
+        <heroName>Monkey King</heroName>
+        <heroImg>/Monkey King/Monkey King.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>55</heroId>
+        <heroName>Morphling</heroName>
+        <heroImg>/Morphling/Morphling.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>56</heroId>
+        <heroName>Naga Siren</heroName>
+        <heroImg>/Naga Siren/Naga Siren.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>57</heroId>
+        <heroName>Nyx Assassin</heroName>
+        <heroImg>/Nyx Assassin/Nyx Assassin.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>58</heroId>
+        <heroName>Phantom Assassin</heroName>
+        <heroImg>/Phantom Assassin/Phantom Assassin.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>59</heroId>
+        <heroName>Phantom Lancer</heroName>
+        <heroImg>/Phantom Lancer/Phantom Lancer.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>60</heroId>
+        <heroName>Razor</heroName>
+        <heroImg>/Razor/Razor.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>61</heroId>
+        <heroName>Riki</heroName>
+        <heroImg>/Riki/Riki.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>62</heroId>
+        <heroName>Shadow Fiend</heroName>
+        <heroImg>/Shadow Fiend/Shadow Fiend.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>63</heroId>
+        <heroName>Slark</heroName>
+        <heroImg>/Slark/Slark.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>64</heroId>
+        <heroName>Sniper</heroName>
+        <heroImg>/Sniper/Sniper.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>65</heroId>
+        <heroName>Spectre</heroName>
+        <heroImg>/Spectre/Spectre.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>66</heroId>
+        <heroName>Templar Assassin</heroName>
+        <heroImg>/Templar Assassin/Templar Assassin.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>67</heroId>
+        <heroName>Terrorblade</heroName>
+        <heroImg>/Terrorblade/Terrorblade.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>68</heroId>
+        <heroName>Troll Warlord</heroName>
+        <heroImg>/Troll Warlord/Troll Warlord.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>69</heroId>
+        <heroName>Ursa</heroName>
+        <heroImg>/Ursa/Ursa.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>70</heroId>
+        <heroName>Vengeful Spirit</heroName>
+        <heroImg>/Vengeful Spirit/Vengeful Spirit.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>71</heroId>
+        <heroName>Venomancer</heroName>
+        <heroImg>/Venomancer/Venomancer.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>72</heroId>
+        <heroName>Viper</heroName>
+        <heroImg>/Viper/Viper.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>73</heroId>
+        <heroName>Weaver</heroName>
+        <heroImg>/Weaver/Weaver.png</heroImg>
+        <heroAttribute>Agility</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>74</heroId>
+        <heroName>Ancient Apparition</heroName>
+        <heroImg>/Ancient Apparition/Ancient Apparition.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>75</heroId>
+        <heroName>Bane</heroName>
+        <heroImg>/Bane/Bane.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>76</heroId>
+        <heroName>Batrider</heroName>
+        <heroImg>/Batrider/Batrider.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>77</heroId>
+        <heroName>Chen</heroName>
+        <heroImg>/Chen/Chen.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>78</heroId>
+        <heroName>Crystal Maiden</heroName>
+        <heroImg>/Crystal Maiden/Crystal Maiden.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>79</heroId>
+        <heroName>Dark Seer</heroName>
+        <heroImg>/Dark Seer/Dark Seer.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>80</heroId>
+        <heroName>Dazzle</heroName>
+        <heroImg>/Dazzle/Dazzle.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>81</heroId>
+        <heroName>Death Prophet</heroName>
+        <heroImg>/Death Prophet/Death Prophet.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>82</heroId>
+        <heroName>Disruptor</heroName>
+        <heroImg>/Disruptor/Disruptor.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>83</heroId>
+        <heroName>Enchantress</heroName>
+        <heroImg>/Enchantress/Enchantress.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>84</heroId>
+        <heroName>Enigma</heroName>
+        <heroImg>/Enigma/Enigma.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>85</heroId>
+        <heroName>Invoker</heroName>
+        <heroImg>/Invoker/Invoker.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>86</heroId>
+        <heroName>Jakiro</heroName>
+        <heroImg>/Jakiro/Jakiro.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>87</heroId>
+        <heroName>Keeper of the Light</heroName>
+        <heroImg>/Keeper of the Light/Keeper of the Light.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>88</heroId>
+        <heroName>Leshrac</heroName>
+        <heroImg>/Leshrac/Leshrac.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>89</heroId>
+        <heroName>Lich</heroName>
+        <heroImg>/Lich/Lich.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>90</heroId>
+        <heroName>Lina</heroName>
+        <heroImg>/Lina/Lina.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>91</heroId>
+        <heroName>Lion</heroName>
+        <heroImg>/Lion/Lion.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>92</heroId>
+        <heroName>Nature's Prophet</heroName>
+        <heroImg>/Nature's Prophet/Nature's Prophet.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>93</heroId>
+        <heroName>Necrophos</heroName>
+        <heroImg>/Necrophos/Necrophos.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>94</heroId>
+        <heroName>Ogre Magi</heroName>
+        <heroImg>/Ogre Magi/Ogre Magi.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>95</heroId>
+        <heroName>Oracle</heroName>
+        <heroImg>/Oracle/Oracle.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>96</heroId>
+        <heroName>Outworld Devourer</heroName>
+        <heroImg>/Outworld Devourer/Outworld Devourer.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>97</heroId>
+        <heroName>Puck</heroName>
+        <heroImg>/Puck/Puck.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>98</heroId>
+        <heroName>Pugna</heroName>
+        <heroImg>/Pugna/Pugna.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>99</heroId>
+        <heroName>Queen of Pain</heroName>
+        <heroImg>/Queen of Pain/Queen of Pain.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>100</heroId>
+        <heroName>Rubick</heroName>
+        <heroImg>/Rubick/Rubick.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>101</heroId>
+        <heroName>Shadow Demon</heroName>
+        <heroImg>/Shadow Demon/Shadow Demon.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>102</heroId>
+        <heroName>Shadow Shaman</heroName>
+        <heroImg>/Shadow Shaman/Shadow Shaman.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>103</heroId>
+        <heroName>Silencer</heroName>
+        <heroImg>/Silencer/Silencer.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>104</heroId>
+        <heroName>Skywrath Mage</heroName>
+        <heroImg>/Skywrath Mage/Skywrath Mage.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>105</heroId>
+        <heroName>Storm Spirit</heroName>
+        <heroImg>/Storm Spirit/Storm Spirit.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>106</heroId>
+        <heroName>Techies</heroName>
+        <heroImg>/Techies/Techies.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>107</heroId>
+        <heroName>Tinker</heroName>
+        <heroImg>/Tinker/Tinker.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>108</heroId>
+        <heroName>Visage</heroName>
+        <heroImg>/Visage/Visage.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>109</heroId>
+        <heroName>Warlock</heroName>
+        <heroImg>/Warlock/Warlock.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>110</heroId>
+        <heroName>Windranger</heroName>
+        <heroImg>/Windranger/Windranger.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>111</heroId>
+        <heroName>Winter Wyvern</heroName>
+        <heroImg>/Winter Wyvern/Winter Wyvern.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>112</heroId>
+        <heroName>Witch Doctor</heroName>
+        <heroImg>/Witch Doctor/Witch Doctor.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+    <hero>
+        <heroId>113</heroId>
+        <heroName>Zeus</heroName>
+        <heroImg>/Zeus/Zeus.png</heroImg>
+        <heroAttribute>Intelligence</heroAttribute>
+    </hero>
+</heroes>

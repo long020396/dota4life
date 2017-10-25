@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
@@ -136,5 +139,22 @@ public class Utils {
             e.printStackTrace();
         }
         return xmlString;
+    }
+    
+    public static Connection getDBConnection() {
+        Connection dbConnection = null;
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+//            dbConnection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433:Doto4Life", "sa", "lovenex23");
+            dbConnection = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1\\localhost:1433;databasename=Doto4Life;user=sa;password=lovenex23");
+            return dbConnection;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dbConnection;
     }
 }

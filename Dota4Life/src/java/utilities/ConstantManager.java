@@ -3,7 +3,7 @@ package utilities;
 public class ConstantManager {
 
     /* File path */
-    public static final String PATH_PROJECT = "D:\\Education\\FPT\\XML\\Exercise\\Projects\\Dota4Life";
+    public static final String PATH_PROJECT = "D:\\Education\\FPT\\XML\\Exercise\\Projects\\Dota4Life\\web";
     public static final String PATH_MEDIA = PATH_PROJECT + "\\Media";
 
     /* Page URL */

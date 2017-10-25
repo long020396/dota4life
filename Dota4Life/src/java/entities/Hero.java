@@ -17,9 +17,17 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -28,6 +36,17 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "Hero")
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "hero", propOrder = {
+    "id",
+    "name",
+    "img",
+    "attribute",
+    "lore",
+    "badAgainstIDs",
+    "goodAgainstIDs",
+    "roleOfHeroList",
+    "skillList"})
 @NamedQueries({
     @NamedQuery(name = "Hero.findAll", query = "SELECT h FROM Hero h")
     , @NamedQuery(name = "Hero.findById", query = "SELECT h FROM Hero h WHERE h.id = :id")
@@ -45,28 +64,40 @@ public class Hero implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
+    @XmlElement(required = true)
     private Integer id;
     @Basic(optional = false)
     @Column(name = "Name")
+    @XmlElement(required = true)
     private String name;
     @Column(name = "OldName")
+    @XmlTransient
     private String oldName;
     @Basic(optional = false)
     @Column(name = "Img")
+    @XmlElement(required = true)
     private String img;
     @Basic(optional = false)
     @Column(name = "Attribute")
+    @XmlElement(required = true)
     private String attribute;
     @Basic(optional = false)
     @Column(name = "Lore")
+    @XmlElement(required = true)
     private String lore;
     @Column(name = "BadAgainstIDs")
+    @XmlElement
     private String badAgainstIDs;
     @Column(name = "GoodAgainstIDs")
+    @XmlElement
     private String goodAgainstIDs;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "heroID")
+    @XmlElement
     private List<RoleOfHero> roleOfHeroList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "heroID")
+    @XmlElementWrapper(name = "skills")
+    @XmlElement(name = "skill")
+    @OrderBy("SkillOrder ASC")
     private List<Skill> skillList;
 
     public Hero() {
@@ -190,5 +221,5 @@ public class Hero implements Serializable {
     public String toString() {
         return "entities.Hero[ id=" + id + " ]";
     }
-    
+
 }

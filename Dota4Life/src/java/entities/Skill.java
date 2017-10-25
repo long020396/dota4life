@@ -17,7 +17,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -26,6 +31,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "Skill")
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "skill", propOrder = {
+    "id",
+    "name",
+    "img",
+    "skillOrder",
+    "ability",
+    "damageType",
+    "description",
+    "coolDown",
+    "mana",
+    "damage",
+    "duration",
+    "stunDuration",
+    "silenceDuration"})
 @NamedQueries({
     @NamedQuery(name = "Skill.findAll", query = "SELECT s FROM Skill s")
     , @NamedQuery(name = "Skill.findById", query = "SELECT s FROM Skill s WHERE s.id = :id")
@@ -49,39 +69,54 @@ public class Skill implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
+    @XmlElement(required = true)
     private Integer id;
     @Basic(optional = false)
     @Column(name = "Name")
+    @XmlElement(required = true)
     private String name;
     @Basic(optional = false)
     @Column(name = "Img")
+    @XmlElement(required = true)
     private String img;
     @Basic(optional = false)
     @Column(name = "SkillOrder")
+    @XmlElement(required = true)
     private int skillOrder;
     @Column(name = "Ability")
+    @XmlElement(required = true)
     private String ability;
     @Column(name = "Affect")
+    @XmlTransient
     private String affect;
     @Column(name = "DamageType")
+    @XmlElement(required = true)
     private String damageType;
     @Basic(optional = false)
     @Column(name = "Description")
+    @XmlElement(required = true)
     private String description;
     @Column(name = "CoolDown")
+    @XmlElement(required = false)
     private String coolDown;
     @Column(name = "Mana")
+    @XmlElement(required = false)
     private String mana;
     @Column(name = "Damage")
+    @XmlElement(required = false)
     private String damage;
     @Column(name = "Duration")
+    @XmlElement(required = false)
     private String duration;
     @Column(name = "StunDuration")
+    @XmlElement(required = false)
     private String stunDuration;
     @Column(name = "SilenceDuration")
+    @XmlElement(required = false)
     private String silenceDuration;
     @JoinColumn(name = "HeroID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
+    @XmlTransient
     private Hero heroID;
 
     public Skill() {

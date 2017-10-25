@@ -8,6 +8,10 @@
         <servlet-name>CrawlHeroesServlet</servlet-name>
         <servlet-class>servlets.CrawlHeroesServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetAllHeroesServlet</servlet-name>
+        <servlet-class>servlets.GetAllHeroesServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DispatchServlet</servlet-name>
         <url-pattern>/DispatchServlet</url-pattern>
@@ -16,12 +20,16 @@
         <servlet-name>CrawlHeroesServlet</servlet-name>
         <url-pattern>/CrawlHeroesServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetAllHeroesServlet</servlet-name>
+        <url-pattern>/GetAllHeroesServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>DispatchServlet</welcome-file>
     </welcome-file-list>
 </web-app>

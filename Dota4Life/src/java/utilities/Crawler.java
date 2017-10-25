@@ -35,8 +35,6 @@ public class Crawler {
     public void crawlDataAndSaveToDB() {
         RoleBLO roleBLO = new RoleBLO();
         HeroBLO heroBLO = new HeroBLO();
-        SkillBLO skillBLO = new SkillBLO();
-        RoleOfHeroBLO roleOfHeroBLO = new RoleOfHeroBLO();
 
         getListOfHero();
         crawlHero();

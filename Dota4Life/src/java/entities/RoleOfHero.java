@@ -17,7 +17,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -26,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "RoleOfHero")
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @NamedQueries({
     @NamedQuery(name = "RoleOfHero.findAll", query = "SELECT r FROM RoleOfHero r")
     , @NamedQuery(name = "RoleOfHero.findById", query = "SELECT r FROM RoleOfHero r WHERE r.id = :id")})
@@ -36,12 +43,15 @@ public class RoleOfHero implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
+    @XmlElement
     private Integer id;
     @JoinColumn(name = "HeroID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
+    @XmlTransient
     private Hero heroID;
     @JoinColumn(name = "RoleID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
+    @XmlTransient
     private Role roleID;
 
     public RoleOfHero() {
