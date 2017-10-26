@@ -2,14 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="4">
         <file>
-            <url>src/java/utilities/StAXParser.java</url>
-            <bookmark id="4">
-                <name/>
-                <line>81</line>
-                <key/>
-            </bookmark>
-        </file>
-        <file>
             <url>src/java/utilities/Crawler.java</url>
             <bookmark id="3">
                 <name/>
@@ -25,13 +17,9 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/web/WEB-INF/heroList.xsl</file>
-            <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/src/java/servlets/GetAllHeroesServlet.java</file>
-            <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/web/WEB-INF/newXMLDocument.xml</file>
-            <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/src/java/BLO/HeroBLO.java</file>
-            <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/src/java/DTO/SimplifiedHeroDTO.java</file>
-            <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/web/index.jsp</file>
-            <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/web/WEB-INF/web.xml</file>
+            <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/src/java/servlets/DispatchServlet.java</file>
+            <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/src/java/utilities/StAXParser.java</file>
+            <file>file:/D:/Education/FPT/XML/Exercise/Projects/Dota4Life/src/java/utilities/Crawler.java</file>
         </group>
     </open-files>
 </project-private>

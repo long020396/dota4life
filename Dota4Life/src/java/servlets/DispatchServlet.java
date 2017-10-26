@@ -32,7 +32,7 @@ public class DispatchServlet extends HttpServlet {
 
         try {
             if (action == null) {
-                url = getAllHeroesServlet;
+                url = crawlHeroesServlet;
             } else if (action.equals("")) {
                 url = "";
             }

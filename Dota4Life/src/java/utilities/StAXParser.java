@@ -19,6 +19,7 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.EndElement;
+import javax.xml.stream.events.EntityReference;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
@@ -31,6 +32,10 @@ public class StAXParser {
         fact.setProperty(XMLInputFactory.IS_VALIDATING, false);
 
         XMLEventReader reader = null;
+
+        if (hero.getName().equals("Abaddon")) {
+            System.out.println("here");
+        }
 
         try {
             InputStream is = new ByteArrayInputStream(document.getBytes("UTF-8"));
@@ -167,6 +172,14 @@ public class StAXParser {
                         }
                     } // end of open tag <td>
 
+                    if (startElement.getName().toString().equals("p")) {
+                        if (bioContent) {
+                            if (lore != null) {
+                                lore = lore + "<br/><br/>";
+                            }
+                        }
+                    }
+
                 } // end if startElement
 
                 /* Check characters */
@@ -179,7 +192,7 @@ public class StAXParser {
                         if (lore == null) {
                             lore = str;
                         } else {
-                            lore = lore + "<br/>" + str;
+                            lore = lore + str;
                         }
                     }
 
@@ -330,6 +343,16 @@ public class StAXParser {
 
                 } // end if endElement
 
+                /*  */
+                if (event.isEntityReference()) {
+                    EntityReference entityReference = (EntityReference) event;
+
+                    if (entityReference.getName().equals("mdash")) {
+                        if (bioContent) {
+                            lore = lore + " - ";
+                        }
+                    }
+                }
             } // end while 
         } catch (XMLStreamException ex) {
             Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
