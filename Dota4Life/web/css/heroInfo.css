@@ -1,0 +1,134 @@
+.hero-info {
+    width: 75%;
+    margin: 40px auto;
+}
+
+.big-size {
+    font-size: 36px;
+    font-weight: 900;
+    margin-right: 20px;
+}
+
+.hero-portrait > img {
+    width: 500px;
+}
+
+.hero-story {
+    width: 80%;
+    margin: 30px auto;
+}
+
+.hero-story > p {
+    text-align: left;
+}
+
+.small-size {
+    font-size: 18px;
+    font-weight: 900;
+    margin-right: 20px;
+    /*background: white;*/
+}
+
+.small-size > span {
+    padding: 0 20px 0 20px;
+}
+
+.hero-portrait, .hero-name, .hero-story {
+    text-align: center;
+}
+
+.hero-skill-list {
+    margin: 30px auto;
+}
+
+.hero-skill {
+    width: 60%;
+    margin: 20px auto;
+    margin-bottom: 30px;
+    background-color: #131415;
+    border: 1px solid transparent;
+    border-radius: 0;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.skill-name {
+    font-weight: bold;
+    font-size: 20px;
+    color: #e5e6e8;
+    background-color: #202123;
+    border-color: #1c1d1f;
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+}
+
+.skill-type {
+    line-height: 50px;
+    display: inline;
+}
+
+.skill-type > span {
+    float: left;
+}
+
+.left-side, .right-side {
+    width: 43%;
+    padding: 0 20px 0 20px;
+}
+
+.skill-img, .skill-content, .info-name, .info {
+    float: left;
+    padding: 0 20px 0 20px;
+}
+
+.clear {
+    clear: both;
+}
+
+/*.right-side, .info {
+    margin-left: 40%;
+}*/
+
+.info-name {
+    width: 20%;
+}
+
+.info {
+    width: auto;
+}
+
+.skill-info {
+    border-top: 1px solid #62656c;
+    height: 30px;
+    line-height: 30px;
+}
+
+.skill-intro {
+    display: inline-flex;
+}
+
+.reference-heroes {
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.reference-heroes > div {
+    margin: 0 auto;
+}
+
+.reference-heroes > div > div {
+    float: none;
+    display: inline-block;
+}
+
+.reference-heroes > div > h1 {
+    margin-bottom: 15px;
+}
+
+.bad-against > div:hover {
+    outline: 4px solid red;
+}
+.good-against > div:hover {
+    outline: 4px solid lime;
+}

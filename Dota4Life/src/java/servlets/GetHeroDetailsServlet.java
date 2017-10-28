@@ -1,18 +1,30 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package servlets;
 
+import BLO.HeroBLO;
+import DTO.HeroListDTO;
+import entities.Hero;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utilities.Utils;
 
-public class DispatchServlet extends HttpServlet {
-
-    private final String crawlHeroesServlet = "CrawlHeroesServlet";
-    private final String getAllHeroesServlet = "GetAllHeroesServlet";
-    private final String getHeroDetailsServlet = "GetHeroDetailsServlet";
+/**
+ *
+ * @author Du
+ */
+public class GetHeroDetailsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -28,15 +40,28 @@ public class DispatchServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        String action = request.getParameter("btnAction");
-        String url = "";
+        String url = "heroInfo.jsp";
+        String heroId = request.getParameter("heroId");
 
         try {
-            if (action == null) {
-                url = getAllHeroesServlet;
-            } else if (action.equals("viewHeroDetails")) {
-                url = getHeroDetailsServlet;
-            }
+            HeroBLO heroBLO = new HeroBLO();
+            Hero hero = heroBLO.getHeroById(Integer.parseInt(heroId));
+            String badAgainstIds = hero.getBadAgainstIDs();
+            String goodAgainstIds = hero.getGoodAgainstIDs();
+            
+            HeroListDTO badAgainstHeroesDTO = heroBLO.getHeroesByMultipleIds(badAgainstIds);
+            HeroListDTO goodAgainstHeroesDTO = heroBLO.getHeroesByMultipleIds(goodAgainstIds);
+            
+            String heroDetails = Utils.marshallerToString(hero);
+            String badAgainstHeroes = Utils.marshallerToString(badAgainstHeroesDTO);
+            String goodAgainstHeroes = Utils.marshallerToString(goodAgainstHeroesDTO);
+
+            request.setAttribute("HERO_NAME", hero.getName());
+            request.setAttribute("HERO_DETAILS", heroDetails);
+            request.setAttribute("BAD_AGAINST_HERO_LIST", badAgainstHeroes);
+            request.setAttribute("GOOD_AGAINST_HERO_LIST", goodAgainstHeroes);
+        } catch (SQLException ex) {
+            Logger.getLogger(GetHeroDetailsServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

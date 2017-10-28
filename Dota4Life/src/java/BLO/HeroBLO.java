@@ -118,7 +118,7 @@ public class HeroBLO {
 
         Connection conn = null;
         Statement stmt = null;
-        
+
         SimplifiedHeroDTO spfHeroDTO = null;
         List<SimplifiedHeroDTO> result = null;
         HeroListDTO heroListDTO = null;
@@ -126,10 +126,10 @@ public class HeroBLO {
             conn = Utils.getDBConnection();
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT ID, Name, Img, Attribute FROM Hero");
-            
+
             while (rs.next()) {
                 spfHeroDTO = new SimplifiedHeroDTO(rs.getInt("ID"), rs.getString("Name"), rs.getString("Img"), rs.getString("Attribute"));
-                
+
                 if (result == null) {
                     result = new ArrayList<SimplifiedHeroDTO>();
                 }
@@ -150,10 +150,44 @@ public class HeroBLO {
         return heroListDTO;
     }
 
+    public HeroListDTO getHeroesByMultipleIds(String ids) throws SQLException {
+        Connection conn = null;
+        Statement stmt = null;
+
+        SimplifiedHeroDTO spfHeroDTO = null;
+        List<SimplifiedHeroDTO> result = null;
+        HeroListDTO heroListDTO = null;
+        try {
+            conn = Utils.getDBConnection();
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT ID, Name, Img, Attribute FROM Hero WHERE ID IN (" + ids.replaceAll(";", ",") + ")");
+            while (rs.next()) {
+                spfHeroDTO = new SimplifiedHeroDTO(rs.getInt("ID"), rs.getString("Name"), rs.getString("Img"), rs.getString("Attribute"));
+
+                if (result == null) {
+                    result = new ArrayList<SimplifiedHeroDTO>();
+                }
+                result.add(spfHeroDTO);
+            }
+            heroListDTO = new HeroListDTO();
+            heroListDTO.setHero(result);
+        } catch (Exception e) {
+            e.printStackTrace();;
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return heroListDTO;
+    }
+
     public SimplifiedHeroDTO getSimplifiedHeroById(int id) {
         Connection conn = null;
         Statement stmt = null;
-        
+
         SimplifiedHeroDTO spfHeroDTO = null;
         try {
             conn = Utils.getDBConnection();

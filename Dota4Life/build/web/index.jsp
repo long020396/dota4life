@@ -14,11 +14,23 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Dota 4 Life</title>
+        <link href="css/general.css" rel="stylesheet" type="text/css"/>
+        <title>Dota4Life</title>
     </head>
     <body>
+        <div class="container">
+            <c:import url="header.html" charEncoding="UTF-8" />
 
-        <x:transform xml="${heroList}" xslt="${xslDoc}" />
+            <div class="content-frame">
+                <div class="search">
+                    <label>Hero name</label>
+                    <input type="text" name="txtHeroName"/>
+                </div>
+
+                <x:transform xml="${heroList}" xslt="${xslDoc}" />
+            </div>
+        </div>
+
 
     </body>
 </html>

@@ -12,6 +12,10 @@
         <servlet-name>GetAllHeroesServlet</servlet-name>
         <servlet-class>servlets.GetAllHeroesServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetHeroDetailsServlet</servlet-name>
+        <servlet-class>servlets.GetHeroDetailsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DispatchServlet</servlet-name>
         <url-pattern>/DispatchServlet</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>GetAllHeroesServlet</servlet-name>
         <url-pattern>/GetAllHeroesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetHeroDetailsServlet</servlet-name>
+        <url-pattern>/GetHeroDetailsServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
