@@ -2,7 +2,6 @@ package servlets;
 
 import BLO.HeroBLO;
 import DTO.HeroListDTO;
-import DTO.SimplifiedHeroDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -16,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import utilities.Utils;
 
 public class GetAllHeroesServlet extends HttpServlet {
-    
+
     private final String homePage = "index.jsp";
 
     /**
@@ -36,7 +35,7 @@ public class GetAllHeroesServlet extends HttpServlet {
             HeroBLO heroBLO = new HeroBLO();
             HeroListDTO heroList = heroBLO.getAllHeroes();
             String strHeroList = Utils.marshallerToString(heroList);
-            
+
             request.setAttribute("HERO_LIST", strHeroList);
         } catch (SQLException ex) {
             Logger.getLogger(GetAllHeroesServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -44,6 +43,7 @@ public class GetAllHeroesServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher(homePage);
             rd.forward(request, response);
             out.close();
+
         }
     }
 

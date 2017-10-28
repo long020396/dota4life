@@ -20,7 +20,6 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
@@ -33,6 +32,9 @@ import javax.xml.bind.annotation.XmlType;
 @Table(name = "RoleOfHero")
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "roleofhero", propOrder = {
+    "id",
+    "roleName"})
 @NamedQueries({
     @NamedQuery(name = "RoleOfHero.findAll", query = "SELECT r FROM RoleOfHero r")
     , @NamedQuery(name = "RoleOfHero.findById", query = "SELECT r FROM RoleOfHero r WHERE r.id = :id")})
@@ -53,6 +55,9 @@ public class RoleOfHero implements Serializable {
     @ManyToOne(optional = false)
     @XmlTransient
     private Role roleID;
+    @Column(name = "RoleName")
+    @XmlElement
+    private String roleName;
 
     public RoleOfHero() {
     }
@@ -85,6 +90,14 @@ public class RoleOfHero implements Serializable {
         this.roleID = roleID;
     }
 
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -109,5 +122,5 @@ public class RoleOfHero implements Serializable {
     public String toString() {
         return "entities.RoleOfHero[ id=" + id + " ]";
     }
-    
+
 }

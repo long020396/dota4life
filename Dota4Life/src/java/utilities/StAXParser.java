@@ -33,10 +33,6 @@ public class StAXParser {
 
         XMLEventReader reader = null;
 
-        if (hero.getName().equals("Abaddon")) {
-            System.out.println("here");
-        }
-
         try {
             InputStream is = new ByteArrayInputStream(document.getBytes("UTF-8"));
             reader = fact.createXMLEventReader(new InputStreamReader(is, "UTF-8"));
@@ -347,7 +343,7 @@ public class StAXParser {
                 if (event.isEntityReference()) {
                     EntityReference entityReference = (EntityReference) event;
 
-                    if (entityReference.getName().equals("mdash")) {
+                    if (entityReference.getName().toString().equals("mdash")) {
                         if (bioContent) {
                             lore = lore + " - ";
                         }
@@ -355,9 +351,9 @@ public class StAXParser {
                 }
             } // end while 
         } catch (XMLStreamException ex) {
-            Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StAXParser.class.getName().toString()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StAXParser.class.getName().toString()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -423,7 +419,7 @@ public class StAXParser {
                     if (heroEntry) {
                         heroName = str;
                         for (Hero each : heroList) {
-                            if (each.getName().equals(heroName)) {
+                            if (each.getName().toString().equals(heroName)) {
 
                                 /* Add hero to the right list */
                                 switch (listType) {
@@ -459,9 +455,9 @@ public class StAXParser {
             }
 
         } catch (XMLStreamException ex) {
-            Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StAXParser.class.getName().toString()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StAXParser.class.getName().toString()).log(Level.SEVERE, null, ex);
         } finally {
 
         }
@@ -480,12 +476,15 @@ public class StAXParser {
             reader = fact.createXMLEventReader(new InputStreamReader(is, "UTF-8"));
 
             /* Flag variables for parser */
+            boolean newRole = false;
+            boolean roleDescriptionEntry = false;
             boolean heroEntry = false;
 
             int index = 0;
 
             /* Data by text */
             String roleName = null;
+            String roleDescription = null;
             String heroName = null;
 
             /* Entity */
@@ -506,10 +505,11 @@ public class StAXParser {
 
                                 /* Get id value of span tag */
                                 roleName = startElement.getAttributeByName(new QName("id")).getValue().toString();
+                                newRole = true;
                                 if (roleListExisted) {
                                     index = 0;
                                     for (Role mainRole : roleList) {
-                                        if (mainRole.getName().equals(roleName)) {
+                                        if (mainRole.getName().toString().equals(roleName)) {
                                             role = mainRole;
                                             break;
                                         }
@@ -533,14 +533,24 @@ public class StAXParser {
                             } // end if attr.getValue()
                         } // end if attr != null
                     } // end of start tag <div>
+
+                    if (startElement.getName().toString().equals("i")) {
+                        if (newRole) {
+                            if (!roleListExisted) {
+                                roleDescriptionEntry = true;
+                            }
+                        }
+                    }
                 } // end if startElement
 
                 /* Check characters */
                 if (event.isCharacters()) {
+                    String str = event.asCharacters().getData();
+
                     if (heroEntry) {
-                        heroName = event.asCharacters().getData();
+                        heroName = str;
                         for (Hero each : heroList) {
-                            if (each.getName().equals(heroName)) {
+                            if (each.getName().toString().equals(heroName)) {
                                 hero = each;
                             }
                         } // end for heroList
@@ -548,6 +558,7 @@ public class StAXParser {
                         RoleOfHero roh = new RoleOfHero();
                         roh.setRoleID(role);
                         roh.setHeroID(hero);
+                        roh.setRoleName(role.getName().toString());
 
                         if (roleListExisted) {
                             if (role.getRoleOfHeroList() == null) {
@@ -563,10 +574,33 @@ public class StAXParser {
 
                         heroEntry = false;
                     } // end if heroEntry
+
+                    if (roleDescriptionEntry) {
+                        if (role.getDescription() == null) {
+                            role.setDescription(str);
+                        }
+                        roleDescriptionEntry = false;
+                    } // end if roleDescriptionEntry
                 } // end if characters
+
+                if (event.isEndElement()) {
+                    EndElement endElement = event.asEndElement();
+
+                    if (endElement.getName().toString().equals("table")) {
+                        if (newRole) {
+                            newRole = false;
+                        }
+                    }
+
+                    if (endElement.getName().toString().equals("i")) {
+                        if (roleDescriptionEntry) {
+                            roleDescriptionEntry = false;
+                        }
+                    }
+                }
             } // end while
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(StAXParser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StAXParser.class.getName().toString()).log(Level.SEVERE, null, ex);
         } finally {
             reader.close();
         }

@@ -38,31 +38,31 @@ public class Crawler {
 
         getListOfHero();
         crawlHero();
-//        for (Hero hero : this.heroList) {
-//            hero.setImg(Utils.downloadImage(ConstantManager.PATH_MEDIA, "\\" + hero.getName(), hero.getName(), hero.getImg()));
-//            for (Skill skill : hero.getSkillList()) {
-//                skill.setImg(Utils.downloadImage(ConstantManager.PATH_MEDIA, "\\" + hero.getName(), skill.getName(), skill.getImg()));
-//            }
-//            heroBLO.add(hero);
-//        }
-//        crawlCounterHeroes();
-//        for (Hero hero : this.heroList) {
-//            heroBLO.update(hero);
-//        }
-//        crawlRole();
-//        for (Role role : this.roleList) {
-//            role.setRoleOfHeroList(null);
-//        }
-//        for (Hero hero : this.heroList) {
-//            hero.setRoleOfHeroList(null);
-//        }
-//        for (Role role : this.roleList) {
-//            roleBLO.add(role);
-//        }
-//        crawlRole();
-//        for (Role role : this.roleList) {
-//            roleBLO.update(role);
-//        }
+        for (Hero hero : this.heroList) {
+            hero.setImg(Utils.downloadImage(ConstantManager.PATH_MEDIA, "\\" + hero.getName(), hero.getName(), hero.getImg()));
+            for (Skill skill : hero.getSkillList()) {
+                skill.setImg(Utils.downloadImage(ConstantManager.PATH_MEDIA, "\\" + hero.getName(), skill.getName(), skill.getImg()));
+            }
+            heroBLO.add(hero);
+        }
+        crawlCounterHeroes();
+        for (Hero hero : this.heroList) {
+            heroBLO.update(hero);
+        }
+        crawlRole();
+        for (Role role : this.roleList) {
+            role.setRoleOfHeroList(null);
+        }
+        for (Hero hero : this.heroList) {
+            hero.setRoleOfHeroList(null);
+        }
+        for (Role role : this.roleList) {
+            roleBLO.add(role);
+        }
+        crawlRole();
+        for (Role role : this.roleList) {
+            roleBLO.update(role);
+        }
     }
 
     public void getListOfHero() {

@@ -92,7 +92,8 @@ public class Hero implements Serializable {
     @XmlElement
     private String goodAgainstIDs;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "heroID")
-    @XmlElement
+    @XmlElementWrapper(name = "roles")
+    @XmlElement(name = "role")
     private List<RoleOfHero> roleOfHeroList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "heroID")
     @XmlElementWrapper(name = "skills")
